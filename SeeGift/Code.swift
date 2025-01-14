@@ -83,7 +83,25 @@ class UserGroup {
     var giftGivingCombos: [Int: [String: String]] = [:]
     var settings: GroupSettings = GroupSettings()
     var currentYear: Int = 2025
+    //TODO: Might need to change the logic of this since the gift giving should be more in a "circle" than matched
     func randomizeGiftee() {
+        //TODO: The following code randomizes it succesfully. THIS LOOPS INFINITELY SOMETIMES THOUGH! NEED TO FIGURE OUT WHY!
+        // var giftcombo : [String:String] = [:]
+        // var users : [String] = ["Chris", "Brigette", "Collin", "Meg", "Jessie", "Scott", "Aaron"]
+        // var gifterList = users
+        // var gifteeList = users
+        // while (gifteeList.count > 0 || gifterList.count > 0) {
+        //     guard let randomizedGifter = gifterList.randomElement() else {break}
+        //     guard let randomizedGiftee = gifteeList.randomElement() else {break}
+        //     if (randomizedGiftee == randomizedGifter) {
+        //         continue
+        //     }
+        //     gifterList.removeAll { $0 == randomizedGifter }
+        //     gifteeList.removeAll { $0 == randomizedGiftee }
+        //     giftcombo[randomizedGifter] = randomizedGiftee
+        // }
+        // print(giftcombo)
+        
         if (settings.canCouplesMatch) {
             if(settings.canPairingsRepeat) {
                 //No limitations so just randomize
@@ -106,7 +124,15 @@ class UserGroup {
             giftGivingCombos[currentYear]![randomizedGifter.userName] = randomizedGiftee
         }
         //TODO: Implement logic for when no repeats and no spouses are chosen
-        
+        //No couples, no repeats
+        else {
+            let randomizedGifter = Members.randomElement()!
+            var tempMemberList = Members
+            //Remove user, user's spouse and users match from previous year
+            tempMemberList.removeAll { $0.userName == randomizedGifter.userName || $0.userName == randomizedGifter.spouse || $0.userName == giftGivingCombos[currentYear-1]![randomizedGifter.userName] }
+            let randomizedGiftee = tempMemberList.randomElement()!.userName
+            giftGivingCombos[currentYear]![randomizedGifter.userName] = randomizedGiftee
+        }
     }
 }
 
