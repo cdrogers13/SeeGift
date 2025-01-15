@@ -1,3 +1,5 @@
+import UIKit
+
 //
 //  Code.swift
 //  SeeGift
@@ -35,6 +37,7 @@ class UserAccount {
         self.isFriendsListPublic = isFriendsListPublic
         self.gifteeList = gifteeList
     }
+    
     func addGiftToList(_ gift: Gift) {
         giftsList.append(gift)
     }
@@ -204,3 +207,15 @@ struct GroupSettings {
 
 var newGift = Gift(description: "GIFT")
 var x24: UserGroup = UserGroup()
+var chris = UserAccount(firstName: "Chris", lastName: "Rogers", userName: "juice", spouse: "Brigette")
+var brigette = UserAccount(firstName: "Brigette", lastName: "Rogers", userName: "brig", spouse: "Chris")
+var collin = UserAccount(firstName: "Collin", lastName: "Rogers", userName: "cdrog", spouse: "Megan")
+var meg = UserAccount(firstName: "Megan", lastName: "Rogers", userName: "megv", spouse: "Collin")
+var Aaron = UserAccount(firstName: "Aaron", lastName: "Christopher", userName: "aaron", spouse: "")
+
+
+
+x24.members = [chris, brigette, collin, meg, Aaron]
+x24.generateRandomGiftee(user: chris)
+print("hello")
+
