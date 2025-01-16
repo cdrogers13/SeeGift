@@ -106,40 +106,62 @@ class UserGroup {
         availableGiftees.append(member);
     }
     
-    func generateRandomGiftee(user: UserAccount) -> UserAccount { //TODO: THIS FUNCTION MIGHT BE MORE OF A GENERAL FUNCTION THAN IN THE CLASS BUT WE'LL SEE
-        let previousGiftee = giftGivingCombos[currentYear-1]![user.userName]
-        var randomizedGiftee: UserAccount
+    func generateRandomGiftee(user: UserAccount) { //TODO: THIS FUNCTION MIGHT BE MORE OF A GENERAL FUNCTION THAN IN THE CLASS BUT WE'LL SEE
+        //First check to see if user has already generated gift for current year
+        let hasUserGeneratedGiftee = giftGivingCombos[currentYear]?.keys.contains(user.userName)
+        if (hasUserGeneratedGiftee == true) {
+            print(user.userName + " has already generated gift for current year")
+            return
+        }
+        let previousGiftee = "Chris"
+        var tempAvailableGiftees: [UserAccount] = availableGiftees.filter({$0.userName != user.userName})
         if (settings.canCouplesMatch) {
+            print("1")
             if(settings.canPairingsRepeat) {
-                 randomizedGiftee = availableGiftees.randomElement()!
+                print("2")
+                guard let randomizedGiftee = tempAvailableGiftees.randomElement() else {return}
                 
-                availableGiftees.remove(at: availableGiftees.firstIndex(where: {$0.userName == randomizedGiftee.userName})!)
+                if let gifteeIndex = availableGiftees.firstIndex(where: {$0.userName == randomizedGiftee.userName}) {
+                    availableGiftees.remove(at: gifteeIndex)
+                }
                 
-                giftGivingCombos[currentYear]![user.userName] = randomizedGiftee.userName
+                giftGivingCombos[currentYear]?[user.userName] = randomizedGiftee.userName
+                print("3")
             }
             else {
-                 randomizedGiftee = availableGiftees.filter{$0.userName != previousGiftee}.randomElement()!
+                print("4")
+                guard let randomizedGiftee = tempAvailableGiftees.filter({$0.userName != previousGiftee}).randomElement() else {return}
                 
-                availableGiftees.remove(at: availableGiftees.firstIndex(where: {$0.userName == randomizedGiftee.userName})!)
+                if let gifteeIndex = availableGiftees.firstIndex(where: {$0.userName == randomizedGiftee.userName}) {
+                    availableGiftees.remove(at: gifteeIndex)
+                }
                 
-                giftGivingCombos[currentYear]![user.userName] = randomizedGiftee.userName
+                
+                giftGivingCombos[currentYear]?[user.userName] = randomizedGiftee.userName
+                print("5")
             }
         }
         else if (settings.canPairingsRepeat) {
-             randomizedGiftee = availableGiftees.filter{$0.userName != user.spouse}.randomElement()!
+            print("6")
+            guard let randomizedGiftee = tempAvailableGiftees.filter({$0.userName != user.spouse}).randomElement() else {return}
             
-            availableGiftees.remove(at: availableGiftees.firstIndex(where: {$0.userName == randomizedGiftee.userName})!)
-            
-            giftGivingCombos[currentYear]![user.userName] = randomizedGiftee.userName
+            if let gifteeIndex = availableGiftees.firstIndex(where: {$0.userName == randomizedGiftee.userName}) {
+                availableGiftees.remove(at: gifteeIndex)
+            }
+            giftGivingCombos[currentYear]?[user.userName] = randomizedGiftee.userName
+            print("7")
         }
         else {
-             randomizedGiftee = availableGiftees.filter{($0.userName != previousGiftee && $0.userName == user.spouse)}.randomElement()!
+            print("8")
+            guard let randomizedGiftee = tempAvailableGiftees.filter({($0.userName != previousGiftee && $0.userName == user.spouse)}).randomElement() else {return}
             
-            availableGiftees.remove(at: availableGiftees.firstIndex(where: {$0.userName == randomizedGiftee.userName})!)
-            
-            giftGivingCombos[currentYear]![user.userName] = randomizedGiftee.userName
+            if let gifteeIndex = availableGiftees.firstIndex(where: {$0.userName == randomizedGiftee.userName}) {
+                availableGiftees.remove(at: gifteeIndex)
+            }
+            giftGivingCombos[currentYear]?[user.userName] = randomizedGiftee.userName
+            print("9")
         }
-        return randomizedGiftee
+        
     }
     //TODO: Might need to change the logic of this since the gift giving should be more in a "circle" than matched
     func randomizeAllPairings() {
@@ -214,8 +236,13 @@ var meg = UserAccount(firstName: "Megan", lastName: "Rogers", userName: "megv", 
 var Aaron = UserAccount(firstName: "Aaron", lastName: "Christopher", userName: "aaron", spouse: "")
 
 
-
+x24.settings.canCouplesMatch = true
+x24.settings.canPairingsRepeat = true
+x24.giftGivingCombos = [2025: [:]]
 x24.members = [chris, brigette, collin, meg, Aaron]
+x24.availableGiftees = x24.members
 x24.generateRandomGiftee(user: chris)
-print("hello")
-
+print("HI")
+x24.generateRandomGiftee(user: brigette)
+x24.generateRandomGiftee(user: collin)
+x24.generateRandomGiftee(user: chris)
