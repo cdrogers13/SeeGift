@@ -35,7 +35,10 @@ class UserAccount {
         self.isFriendsListPublic = isFriendsListPublic
         self.gifteeList = gifteeList
     }
-    func addGiftToList(_ gift: Gift) {
+    func addGiftToList(_ gift: inout Gift) {
+        if (giftsList.contains(where: {$0.giftID == gift.giftID})) {
+            gift.giftID = Int.random(in: 1...1000000000)
+        }
         giftsList.append(gift)
     }
     
@@ -72,6 +75,7 @@ struct Gift {
     var link: String = ""
     var ranking: Int = 0
     var isGifted: Bool = false
+    var giftID: Int = Int.random(in: 0...1000000000)
     
 //    init(name: String = "MISSING NAME", price: Double = 0, description: String = "", link: String = "", ranking: Int = 0) {
 //        self.name = name
@@ -89,16 +93,30 @@ struct GiftPairings {
 }
 
 class UserGroup {
-    var groupName: String = "Test Group"
-    var members: [UserAccount] = []
-    var groupType: String = "Friend" //Family or Friend...probably use an enum here actually
+    var groupName: String
+    var groupAdmins: [UserAccount]
+    var members: [UserAccount]
+    var groupType: String //Family or Friend...probably use an enum here actually
     var giftGivingCombos: [Int: [String: String]] = [:]
-    //var giftGivingCombos: [GiftPairings]
-    var settings: GroupSettings = GroupSettings()
-    var currentYear: Int = 2025
-    var availableGiftees: [UserAccount] = []
-    var takenGiftees: [String] = [] //This will be user name of people taken in the group already
+    var settings: GroupSettings
+    var currentYear: Int
+    var availableGiftees: [UserAccount]
+    //var takenGiftees: [String] = [] //This will be user name of people taken in the group already
     
+    init(groupName: String = "Test Group", members: [UserAccount] = [], groupAdmins: [UserAccount] = [], groupType: String = "Friend", giftGivingCombos: [Int : [String : String]] = [:], settings: GroupSettings = GroupSettings(), currentYear: Int, availableGiftees: [UserAccount] = []) {
+        self.groupName = groupName
+        self.members = members
+        self.groupAdmins = groupAdmins
+        self.groupType = groupType
+        self.giftGivingCombos[currentYear] = [:]
+        self.settings = settings
+        self.currentYear = currentYear
+        self.availableGiftees = availableGiftees
+    }
+    
+    func isAdmin(_ user: UserAccount) -> Bool {
+        groupAdmins.contains(where: {$0.userName == user.userName})
+    }
     func addMember(_ member: UserAccount) {
         members.append(member);
         availableGiftees.append(member);
@@ -111,7 +129,8 @@ class UserGroup {
             print(user.userName + " has already generated gift for current year")
             return
         }
-        let previousGiftee = "Chris"
+        let previousGiftee = (giftGivingCombos[currentYear-1]?[user.userName] != nil) ? giftGivingCombos[currentYear-1]?[user.userName] : ""
+        
         var tempAvailableGiftees: [UserAccount] = availableGiftees.filter({$0.userName != user.userName})
         if (settings.canCouplesMatch) {
             print("1")
@@ -161,6 +180,19 @@ class UserGroup {
         }
         
     }
+    
+    func adminAssignPairing(gifter: UserAccount, giftee: UserAccount, year: Int) { //TODO: Make sure this can only been done by admin
+        giftGivingCombos[year]?[gifter.userName] = giftee.userName
+    }
+    
+    func adminUpdateGroupSettings(canCouplesMatch: Bool, canPairingsRepeat: Bool, isWhiteElephant: Bool, priceLimit: Double) {
+        settings.canCouplesMatch = canCouplesMatch
+        settings.canPairingsRepeat = canPairingsRepeat
+        settings.isWhiteElephant = isWhiteElephant
+        settings.priceLimit = priceLimit
+    }
+    
+    
     //TODO: Might need to change the logic of this since the gift giving should be more in a "circle" than matched
     func randomizeAllPairings() {
         //TODO: The following code randomizes it succesfully. THIS LOOPS INFINITELY SOMETIMES THOUGH! NEED TO FIGURE OUT WHY!
@@ -225,5 +257,23 @@ struct GroupSettings {
     var priceLimit: Double = 0
 }
 
+//Create a new group with the passed group information. This returns the new group itself, so should be stored in a variable
+func adminCloneGroup(clonedGroup: UserGroup, newGroupName: String, newGroupYear: Int) -> UserGroup {
+    let newGroup = UserGroup(groupName: newGroupName, currentYear: newGroupYear)
+    newGroup.groupName = newGroupName
+    newGroup.groupAdmins = clonedGroup.groupAdmins
+    newGroup.members = clonedGroup.members
+    newGroup.groupType = clonedGroup.groupType
+    newGroup.currentYear = newGroupYear
+    newGroup.settings = clonedGroup.settings
+    return newGroup
+}
+
+//Build out a gift object and then add it to the user account
+func userAddGift(user: UserAccount, giftName: String, giftPrice: Double, giftDescription: String = "", giftLink: String = "", giftRanking: Int = 0, giftIsGifted: Bool = false ) {
+    var newGift = Gift(name: giftName, price: giftPrice, description: giftDescription, link: giftLink, ranking: giftRanking, isGifted: giftIsGifted)
+    user.addGiftToList(&newGift)
+}
+
 var newGift = Gift(description: "GIFT")
-var x24: UserGroup = UserGroup()
+var x24: UserGroup = UserGroup(groupName: "X24", currentYear: 2025)

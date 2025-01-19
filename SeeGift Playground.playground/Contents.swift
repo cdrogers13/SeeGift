@@ -92,14 +92,24 @@ struct GiftPairings {
 }
 
 class UserGroup {
-    var groupName: String = "Test Group"
-    var members: [UserAccount] = []
-    var groupType: String = "Friend" //Family or Friend...probably use an enum here actually
+    var groupName: String
+    var members: [UserAccount]
+    var groupType: String //Family or Friend...probably use an enum here actually
     var giftGivingCombos: [Int: [String: String]] = [:]
-    var settings: GroupSettings = GroupSettings()
-    var currentYear: Int = 2025
-    var availableGiftees: [UserAccount] = []
-    var takenGiftees: [String] = [] //This will be user name of people taken in the group already
+    var settings: GroupSettings
+    var currentYear: Int
+    var availableGiftees: [UserAccount]
+    //var takenGiftees: [String] = [] //This will be user name of people taken in the group already
+    
+    init(groupName: String = "Test Group", members: [UserAccount] = [], groupType: String = "Friend", giftGivingCombos: [Int : [String : String]] = [:], settings: GroupSettings = GroupSettings(), currentYear: Int, availableGiftees: [UserAccount] = []) {
+        self.groupName = groupName
+        self.members = members
+        self.groupType = groupType
+        self.giftGivingCombos[currentYear] = [:]
+        self.settings = settings
+        self.currentYear = currentYear
+        self.availableGiftees = availableGiftees
+    }
     
     func addMember(_ member: UserAccount) {
         members.append(member);
@@ -113,7 +123,7 @@ class UserGroup {
             print(user.userName + " has already generated gift for current year")
             return
         }
-        let previousGiftee = "Chris"
+        let previousGiftee = (giftGivingCombos[currentYear-1]?[user.userName] != nil) ? giftGivingCombos[currentYear-1]?[user.userName] : ""
         var tempAvailableGiftees: [UserAccount] = availableGiftees.filter({$0.userName != user.userName})
         if (settings.canCouplesMatch) {
             print("1")
@@ -228,7 +238,7 @@ struct GroupSettings {
 }
 
 var newGift = Gift(description: "GIFT")
-var x24: UserGroup = UserGroup()
+var x24: UserGroup = UserGroup(groupName: "X24", currentYear: 2024)
 var chris = UserAccount(firstName: "Chris", lastName: "Rogers", userName: "juice", spouse: "Brigette")
 var brigette = UserAccount(firstName: "Brigette", lastName: "Rogers", userName: "brig", spouse: "Chris")
 var collin = UserAccount(firstName: "Collin", lastName: "Rogers", userName: "cdrog", spouse: "Megan")
@@ -238,7 +248,8 @@ var Aaron = UserAccount(firstName: "Aaron", lastName: "Christopher", userName: "
 
 x24.settings.canCouplesMatch = true
 x24.settings.canPairingsRepeat = true
-x24.giftGivingCombos = [2025: [:]]
+x24.giftGivingCombos = [2023: [:], 2024: [:], 2025: [:]]
+x24.giftGivingCombos[2024]?[collin.userName] = brigette.userName
 x24.members = [chris, brigette, collin, meg, Aaron]
 x24.availableGiftees = x24.members
 x24.generateRandomGiftee(user: chris)
@@ -246,3 +257,5 @@ print("HI")
 x24.generateRandomGiftee(user: brigette)
 x24.generateRandomGiftee(user: collin)
 x24.generateRandomGiftee(user: chris)
+x24.giftGivingCombos[2024]?[chris.userName]
+print("HIBYE")
