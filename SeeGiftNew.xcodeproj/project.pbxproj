@@ -29,9 +29,32 @@
 		7C8A05E12D3EEF5100AFBF49 /* SeeGiftNewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SeeGiftNewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7C8A05F82D3EEF7B00AFBF49 /* Exceptions for "SeeGiftNew" folder in "SeeGiftNewTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Code.swift,
+				SignUpPage.swift,
+			);
+			target = 7C8A05D62D3EEF5100AFBF49 /* SeeGiftNewTests */;
+		};
+		7C8A05F92D3EEF7B00AFBF49 /* Exceptions for "SeeGiftNew" folder in "SeeGiftNewUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Code.swift,
+				SignUpPage.swift,
+			);
+			target = 7C8A05E02D3EEF5100AFBF49 /* SeeGiftNewUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7C8A05C92D3EEF5000AFBF49 /* SeeGiftNew */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7C8A05F82D3EEF7B00AFBF49 /* Exceptions for "SeeGiftNew" folder in "SeeGiftNewTests" target */,
+				7C8A05F92D3EEF7B00AFBF49 /* Exceptions for "SeeGiftNew" folder in "SeeGiftNewUITests" target */,
+			);
 			path = SeeGiftNew;
 			sourceTree = "<group>";
 		};
