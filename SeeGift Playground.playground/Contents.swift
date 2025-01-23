@@ -1,3 +1,5 @@
+import UIKit
+
 //
 //  Code.swift
 //  SeeGift
@@ -35,10 +37,8 @@ class UserAccount {
         self.isFriendsListPublic = isFriendsListPublic
         self.gifteeList = gifteeList
     }
-    func addGiftToList(_ gift: inout Gift) {
-        if (giftsList.contains(where: {$0.giftID == gift.giftID})) {
-            gift.giftID = Int.random(in: 1...1000000000)
-        }
+    
+    func addGiftToList(_ gift: Gift) {
         giftsList.append(gift)
     }
     
@@ -75,7 +75,6 @@ struct Gift {
     var link: String = ""
     var ranking: Int = 0
     var isGifted: Bool = false
-    var giftID: Int = Int.random(in: 0...1000000000)
     
 //    init(name: String = "MISSING NAME", price: Double = 0, description: String = "", link: String = "", ranking: Int = 0) {
 //        self.name = name
@@ -94,7 +93,6 @@ struct GiftPairings {
 
 class UserGroup {
     var groupName: String
-    var groupAdmins: [UserAccount]
     var members: [UserAccount]
     var groupType: String //Family or Friend...probably use an enum here actually
     var giftGivingCombos: [Int: [String: String]] = [:]
@@ -103,10 +101,9 @@ class UserGroup {
     var availableGiftees: [UserAccount]
     //var takenGiftees: [String] = [] //This will be user name of people taken in the group already
     
-    init(groupName: String = "Test Group", members: [UserAccount] = [], groupAdmins: [UserAccount] = [], groupType: String = "Friend", giftGivingCombos: [Int : [String : String]] = [:], settings: GroupSettings = GroupSettings(), currentYear: Int, availableGiftees: [UserAccount] = []) {
+    init(groupName: String = "Test Group", members: [UserAccount] = [], groupType: String = "Friend", giftGivingCombos: [Int : [String : String]] = [:], settings: GroupSettings = GroupSettings(), currentYear: Int, availableGiftees: [UserAccount] = []) {
         self.groupName = groupName
         self.members = members
-        self.groupAdmins = groupAdmins
         self.groupType = groupType
         self.giftGivingCombos[currentYear] = [:]
         self.settings = settings
@@ -114,9 +111,6 @@ class UserGroup {
         self.availableGiftees = availableGiftees
     }
     
-    func isAdmin(_ user: UserAccount) -> Bool {
-        groupAdmins.contains(where: {$0.userName == user.userName})
-    }
     func addMember(_ member: UserAccount) {
         members.append(member);
         availableGiftees.append(member);
@@ -130,7 +124,6 @@ class UserGroup {
             return
         }
         let previousGiftee = (giftGivingCombos[currentYear-1]?[user.userName] != nil) ? giftGivingCombos[currentYear-1]?[user.userName] : ""
-        
         var tempAvailableGiftees: [UserAccount] = availableGiftees.filter({$0.userName != user.userName})
         if (settings.canCouplesMatch) {
             print("1")
@@ -180,19 +173,6 @@ class UserGroup {
         }
         
     }
-    
-    func adminAssignPairing(gifter: UserAccount, giftee: UserAccount, year: Int) { //TODO: Make sure this can only been done by admin
-        giftGivingCombos[year]?[gifter.userName] = giftee.userName
-    }
-    
-    func adminUpdateGroupSettings(canCouplesMatch: Bool, canPairingsRepeat: Bool, isWhiteElephant: Bool, priceLimit: Double) {
-        settings.canCouplesMatch = canCouplesMatch
-        settings.canPairingsRepeat = canPairingsRepeat
-        settings.isWhiteElephant = isWhiteElephant
-        settings.priceLimit = priceLimit
-    }
-    
-    
     //TODO: Might need to change the logic of this since the gift giving should be more in a "circle" than matched
     func randomizeAllPairings() {
         //TODO: The following code randomizes it succesfully. THIS LOOPS INFINITELY SOMETIMES THOUGH! NEED TO FIGURE OUT WHY!
@@ -257,23 +237,25 @@ struct GroupSettings {
     var priceLimit: Double = 0
 }
 
-//Create a new group with the passed group information. This returns the new group itself, so should be stored in a variable
-func adminCloneGroup(clonedGroup: UserGroup, newGroupName: String, newGroupYear: Int) -> UserGroup {
-    let newGroup = UserGroup(groupName: newGroupName, currentYear: newGroupYear)
-    newGroup.groupName = newGroupName
-    newGroup.groupAdmins = clonedGroup.groupAdmins
-    newGroup.members = clonedGroup.members
-    newGroup.groupType = clonedGroup.groupType
-    newGroup.currentYear = newGroupYear
-    newGroup.settings = clonedGroup.settings
-    return newGroup
-}
-
-//Build out a gift object and then add it to the user account
-func userAddGift(user: UserAccount, giftName: String, giftPrice: Double, giftDescription: String = "", giftLink: String = "", giftRanking: Int = 0, giftIsGifted: Bool = false ) {
-    var newGift = Gift(name: giftName, price: giftPrice, description: giftDescription, link: giftLink, ranking: giftRanking, isGifted: giftIsGifted)
-    user.addGiftToList(&newGift)
-}
-
 var newGift = Gift(description: "GIFT")
-var x24: UserGroup = UserGroup(groupName: "X24", currentYear: 2025)
+var x24: UserGroup = UserGroup(groupName: "X24", currentYear: 2024)
+var chris = UserAccount(firstName: "Chris", lastName: "Rogers", userName: "juice", spouse: "Brigette")
+var brigette = UserAccount(firstName: "Brigette", lastName: "Rogers", userName: "brig", spouse: "Chris")
+var collin = UserAccount(firstName: "Collin", lastName: "Rogers", userName: "cdrog", spouse: "Megan")
+var meg = UserAccount(firstName: "Megan", lastName: "Rogers", userName: "megv", spouse: "Collin")
+var Aaron = UserAccount(firstName: "Aaron", lastName: "Christopher", userName: "aaron", spouse: "")
+
+
+x24.settings.canCouplesMatch = true
+x24.settings.canPairingsRepeat = true
+x24.giftGivingCombos = [2023: [:], 2024: [:], 2025: [:]]
+x24.giftGivingCombos[2024]?[collin.userName] = brigette.userName
+x24.members = [chris, brigette, collin, meg, Aaron]
+x24.availableGiftees = x24.members
+x24.generateRandomGiftee(user: chris)
+print("HI")
+x24.generateRandomGiftee(user: brigette)
+x24.generateRandomGiftee(user: collin)
+x24.generateRandomGiftee(user: chris)
+x24.giftGivingCombos[2024]?[chris.userName]
+print("HIBYE")
