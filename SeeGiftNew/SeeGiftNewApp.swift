@@ -9,6 +9,12 @@ import SwiftUI
 
 @main
 struct SeeGiftNewApp: App {
+    
+    init() {
+        
+
+            
+    }
     var body: some Scene {
         WindowGroup {
             ContentView()
