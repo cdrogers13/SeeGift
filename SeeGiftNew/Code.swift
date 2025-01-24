@@ -99,7 +99,7 @@ class UserGroup {
     var groupAdmins: [UserAccount]
     var members: [UserAccount]
     var groupType: String //Family or Friend...probably use an enum here actually
-    var giftGivingCombos: [Int: [String: String]] = [:]
+    var giftGivingCombos: [Int: [String: String]]
     var settings: GroupSettings
     var currentYear: Int
     var availableGiftees: [UserAccount]
@@ -110,7 +110,7 @@ class UserGroup {
         self.members = members
         self.groupAdmins = groupAdmins
         self.groupType = groupType
-        self.giftGivingCombos[currentYear] = [:]
+        self.giftGivingCombos = giftGivingCombos
         self.settings = settings
         self.currentYear = currentYear
         self.availableGiftees = availableGiftees

@@ -21,9 +21,16 @@ struct GenerateGifteeView: View {
     
     var x24: UserGroup
     init() {
+         chris = UserAccount(firstName: "Chris", lastName: "Rogers", userName: "juice", spouse: "Brigette")
+         brigette = UserAccount(firstName: "Brigette", lastName: "Rogers", userName: "brig", spouse: "Chris")
+         collin = UserAccount(firstName: "Collin", lastName: "Rogers", userName: "cdrog", spouse: "Megan")
+         meg = UserAccount(firstName: "Megan", lastName: "Rogers", userName: "megv", spouse: "Collin")
+         Aaron = UserAccount(firstName: "Aaron", lastName: "Christopher", userName: "aaron", spouse: "")
         x24 = UserGroup(groupName: "X24", giftGivingCombos: [2023: [:], 2024: [collin.userName:brigette.userName], 2025: [:]], settings: GroupSettings(canCouplesMatch: true , canPairingsRepeat: true), currentYear: 2024)
         x24.members = [chris, brigette, collin, meg, Aaron]
-        x24.availableGiftees = x24.members
+        //remove prematched combos
+        var initMatches = x24.giftGivingCombos[2024]?.values
+        x24.availableGiftees = x24.members.filter( {!initMatches!.contains($0.userName)})
     }
 
 
@@ -38,7 +45,19 @@ struct GenerateGifteeView: View {
             Button(action: { print("HI")
                 x24.generateRandomGiftee(user: brigette)
                 Giftee = (x24.giftGivingCombos[2024]?[brigette.userName])!
-                print(Giftee)
+//                print(Giftee)
+                x24.generateRandomGiftee(user: chris)
+                Giftee = (x24.giftGivingCombos[2024]?[chris.userName])!
+//                print(Giftee)
+                x24.generateRandomGiftee(user: Aaron)
+                Giftee = (x24.giftGivingCombos[2024]?[Aaron.userName])!
+//                print(Giftee)
+                x24.generateRandomGiftee(user: collin)
+                Giftee = (x24.giftGivingCombos[2024]?[collin.userName])!
+//                print(Giftee)
+                x24.generateRandomGiftee(user: meg)
+                Giftee = (x24.giftGivingCombos[2024]?[meg.userName])!
+                print(x24.giftGivingCombos[2024] ?? "Returned NIL")
                 Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in showResult = true}})
             {
                 ZStack {
