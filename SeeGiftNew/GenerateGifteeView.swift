@@ -44,19 +44,19 @@ struct GenerateGifteeView: View {
             
             Button(action: { print("HI")
                 x24.generateRandomGiftee(user: brigette)
-                Giftee = (x24.giftGivingCombos[2024]?[brigette.userName])!
+                Giftee = (x24.giftGivingCombos[2024]?[brigette.userName]) ?? "ERROR"
 //                print(Giftee)
                 x24.generateRandomGiftee(user: chris)
-                Giftee = (x24.giftGivingCombos[2024]?[chris.userName])!
+                Giftee = (x24.giftGivingCombos[2024]?[chris.userName]) ?? "ERROR"
 //                print(Giftee)
                 x24.generateRandomGiftee(user: Aaron)
-                Giftee = (x24.giftGivingCombos[2024]?[Aaron.userName])!
+                Giftee = (x24.giftGivingCombos[2024]?[Aaron.userName]) ?? "ERROR"
 //                print(Giftee)
                 x24.generateRandomGiftee(user: collin)
-                Giftee = (x24.giftGivingCombos[2024]?[collin.userName])!
+                Giftee = (x24.giftGivingCombos[2024]?[collin.userName]) ?? "ERROR"
 //                print(Giftee)
                 x24.generateRandomGiftee(user: meg)
-                Giftee = (x24.giftGivingCombos[2024]?[meg.userName])!
+                Giftee = (x24.giftGivingCombos[2024]?[meg.userName]) ?? "ERROR"
                 print(x24.giftGivingCombos[2024] ?? "Returned NIL")
                 Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in showResult = true}})
             {
