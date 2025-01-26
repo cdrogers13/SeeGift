@@ -26,11 +26,13 @@ struct UserSettingsView: View {
                 
                 VStack {
                     //Need to add some help tooltip descriptions to these somehow
+                    List {
+                        Text("View Gifts Lists")
+                        Text("Friends")
+                        Text("View Giftees")
+                        Text("View Groups")
+                    }.frame(width: 200)
                     
-                    Text("View Gifts Lists")
-                    Text("Friends")
-                    Text("View Giftees")
-                    Text("View Groups")
                     
                     //Put toggles and numbers in this HStack. Padding on the backside to give a nice gap to the gift pairings button
                     //            HStack(spacing: 130) {
