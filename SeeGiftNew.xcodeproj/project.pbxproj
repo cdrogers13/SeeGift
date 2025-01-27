@@ -34,7 +34,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Code.swift,
-				SignUpPage.swift,
+				Views/SignUpPage.swift,
 			);
 			target = 7C8A05D62D3EEF5100AFBF49 /* SeeGiftNewTests */;
 		};
@@ -42,7 +42,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Code.swift,
-				SignUpPage.swift,
+				Views/SignUpPage.swift,
 			);
 			target = 7C8A05E02D3EEF5100AFBF49 /* SeeGiftNewUITests */;
 		};
