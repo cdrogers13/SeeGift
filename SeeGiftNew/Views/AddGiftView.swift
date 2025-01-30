@@ -42,9 +42,20 @@ struct AddGiftView: View {
                         TextField("Gift Ranking", value: $ranking, format: .number).multilineTextAlignment(.trailing)
                     }
                     TextField("Item Description", text: $description).frame(height: 100, alignment: .top)
+                    Button("Save Gift") {
+                        
+                    }.buttonStyle(BorderedProminentButtonStyle()).frame(width: 300, alignment: .center)
+                    
                 }
-                NavigationLink(destination: ContentView()) {
-                    Text("Save")
+                
+                Button(action: {
+                    print("Add Gift")
+                }) {
+                    Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
+                }
+                NavigationLink(destination: LoginPage().navigationBarBackButtonHidden(true)) {
+                    //TODO: Need to add a confirmation here to make sure user is done adding gifts
+                    Text("Finish")
                 }.buttonStyle(BorderedProminentButtonStyle())
             }
         }

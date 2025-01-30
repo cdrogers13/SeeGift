@@ -69,6 +69,9 @@ class UserAccount {
 //    var giftsList: [Gift] = []
 //}
 
+class AdminAccount: UserAccount {
+    
+}
 struct Gift {
     var name: String = "MISSING NAME"
     var price: Double = 0
@@ -94,18 +97,23 @@ struct GiftPairings {
     //Key-Value pairs for the matchups from this year
 }
 
+enum GroupType : String {
+    case family
+    case friend
+}
+
 class UserGroup {
     var groupName: String
     var groupAdmins: [UserAccount]
     var members: [UserAccount]
-    var groupType: String //Family or Friend...probably use an enum here actually
+    var groupType: GroupType //Family or Friend...probably use an enum here actually
     var giftGivingCombos: [Int: [String: String]]
     var settings: GroupSettings
     var currentYear: Int
     var availableGiftees: [UserAccount]
     //var takenGiftees: [String] = [] //This will be user name of people taken in the group already
     
-    init(groupName: String = "Test Group", members: [UserAccount] = [], groupAdmins: [UserAccount] = [], groupType: String = "Friend", giftGivingCombos: [Int : [String : String]] = [:], settings: GroupSettings = GroupSettings(), currentYear: Int, availableGiftees: [UserAccount] = []) {
+    init(groupName: String = "Test Group", members: [UserAccount] = [], groupAdmins: [UserAccount] = [], groupType: GroupType = GroupType.friend, giftGivingCombos: [Int : [String : String]] = [:], settings: GroupSettings = GroupSettings(), currentYear: Int, availableGiftees: [UserAccount] = []) {
         self.groupName = groupName
         self.members = members
         self.groupAdmins = groupAdmins

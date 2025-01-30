@@ -10,10 +10,11 @@ import SwiftUI
 
 
 struct CreateGroupView: View {
+    @State private var navPath = [NavigationPath()]
     @State var groupName: String = ""
     //var groupAdmins: [UserAccount]
     //var members: [UserAccount]
-    @State var groupType: String = ""//Family or Friend...probably use an enum here actually
+    @State var groupType: GroupType = GroupType.friend//Family or Friend...probably use an enum here actually
     //var giftGivingCombos: [Int: [String: String]]
     //var settings: GroupSettings
     @State var currentYear: String = ""
@@ -22,7 +23,8 @@ struct CreateGroupView: View {
     //var availableGiftees: [UserAccount]
     
     var body: some View {
-        NavigationView {
+        NavigationStack () {
+            //NavigationView {
             VStack {
                 Text("Create New Gifting Group").font(.title).fontWeight(.bold).padding()
                 Form {
@@ -33,6 +35,10 @@ struct CreateGroupView: View {
                     HStack {
                         Text("Group Type:")
                         //Picker
+                        Picker("Group Type", selection: $groupType) {
+                            Text("Family").tag(GroupType.family)
+                            Text("Friends").tag(GroupType.friend)
+                        }
                     }
                     HStack {
                         Text("Gifting Year:")
@@ -45,15 +51,31 @@ struct CreateGroupView: View {
                     }.alert(Text("Only Numbers Allowed In The Gifting Year Field"), isPresented: $showAlert) {
                         //Button("OK", role: .cancel) {}
                     }
+                    
                 }
-                NavigationLink(destination: ContentView()) {
-                    Text("Save")
+                VStack (alignment: .center){
+                    Button("Save Changes") {
+                        createdGroup.groupName = groupName
+                        createdGroup.groupType = groupType
+                        
+                       // navPath.append(ContentView())
+                    
+                    }
                 }.buttonStyle(BorderedProminentButtonStyle())
+                //TODO: Somehow i need to make this navigation link perform logic. Upon save i want the useraccount to be added to the created groups GroupAdmins array
+                //                NavigationLink(destination: ContentView()) {
+                //                    Text("Save")
+                //                }.buttonStyle(BorderedProminentButtonStyle())
+                
             }
-            
+        }
+//        }.navigationDestination(for: navPath.self) { path in
+//            if (path == "Home") {
+//                ContentView()
+//            }
         }
     }
-}
+
 
 #Preview {
     CreateGroupView()
