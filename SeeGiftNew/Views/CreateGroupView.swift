@@ -33,9 +33,9 @@ struct CreateGroupView: View {
                         TextField("Group Name", text: $groupName).multilineTextAlignment(.trailing)
                     }
                     HStack {
-                        Text("Group Type:")
+                        
                         //Picker
-                        Picker("Group Type", selection: $groupType) {
+                        Picker("Group Type:", selection: $groupType) {
                             Text("Family").tag(GroupType.family)
                             Text("Friends").tag(GroupType.friend)
                         }
@@ -54,9 +54,11 @@ struct CreateGroupView: View {
                     
                 }
                 VStack (alignment: .center){
-                    Button("Save Changes") {
+                    Button("Save Group") {
                         createdGroup.groupName = groupName
                         createdGroup.groupType = groupType
+                        //Need to get the current user who is creating this group and just add them here, but im not passing it yet
+//                        createdGroup.addMember(userAccount: userAccount)
                         
                        // navPath.append(ContentView())
                     

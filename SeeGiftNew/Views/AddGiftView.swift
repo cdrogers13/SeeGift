@@ -42,21 +42,28 @@ struct AddGiftView: View {
                         TextField("Gift Ranking", value: $ranking, format: .number).multilineTextAlignment(.trailing)
                     }
                     TextField("Item Description", text: $description).frame(height: 100, alignment: .top)
-                    Button("Save Gift") {
-                        
-                    }.buttonStyle(BorderedProminentButtonStyle()).frame(width: 300, alignment: .center)
+                    
                     
                 }
-                
-                Button(action: {
-                    print("Add Gift")
-                }) {
-                    Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
+                HStack{
+                    Button("Save And Add New Gift") {
+                        //This button will save the gift to the users giftlist (Want to add a nice little popup confirmation here)
+                        userAddGift(user: user, giftName: name, giftPrice: price, giftDescription: description, giftLink: link, giftRanking: ranking)
+//                        let newGift: Gift = Gift(name: name, price: price, description: description, link: link, ranking: ranking)
+//                        user.giftsList.append(newGift)
+                        //This button will essentially start the gift creation process over again. It's very crude right now by just erasing the data but that's kind of the idea
+                        name = ""
+                        price = 0
+                        link = ""
+                        ranking = 0
+                        description = ""
+                    }.buttonStyle(BorderedProminentButtonStyle())
+                    
+                    NavigationLink(destination: LoginPage().navigationBarBackButtonHidden(true)) {
+                        //TODO: Need to add a confirmation here to make sure user is done adding gifts
+                        Text("Save And Finish")
+                    }.buttonStyle(BorderedProminentButtonStyle())
                 }
-                NavigationLink(destination: LoginPage().navigationBarBackButtonHidden(true)) {
-                    //TODO: Need to add a confirmation here to make sure user is done adding gifts
-                    Text("Finish")
-                }.buttonStyle(BorderedProminentButtonStyle())
             }
         }
     }

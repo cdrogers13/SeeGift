@@ -24,6 +24,12 @@ struct GiftListScrollView: View {
                 Text("Contact us as (212) 555 3231")
             }
         }
+        
+        Button(action: {
+           
+        }) {
+            Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
+        }
     }
 }
 
