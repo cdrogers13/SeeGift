@@ -72,11 +72,11 @@ class UserAccount {
 class AdminAccount: UserAccount {
     
 }
-struct Gift {
+struct Gift: Hashable {
     var name: String = "MISSING NAME"
     var price: Double = 0
     var description: String = ""
-    //var image: Image
+    var image: String = ""
     var link: String = ""
     var ranking: Int = 0
     var isGifted: Bool = false
@@ -285,5 +285,12 @@ func userAddGift(user: UserAccount, giftName: String, giftPrice: Double, giftDes
     user.addGiftToList(&newGift)
 }
 
-var newGift = Gift(description: "GIFT")
+var newGift = Gift(name: "Test Gift", price: 100, description: "This is a test gift", image: "Test", link: "https://www.google.com")
+var newGift2 = Gift(name: "Test Gift1", price: 35, description: "This is another test gift", image: "Test1", link: "https://www.google.com")
+var newGift3 = Gift(name: "Test Gift2", price: 25, description: "This is a test gift", image: "Test2", link: "https://www.google.com")
+var newGift4 = Gift(name: "Test Gift3", price: 75, description: "This is yet another test gift", image: "Test3", link: "https://www.google.com")
+var newGift5 = Gift(name: "Test Gift4", price: 60, description: "Yup...another test gift", image: "Test2", link: "https://www.google.com")
+var newGift6 = Gift(name: "Test Gift5", price: 35, description: "This is a test gift", image: "Test3", link: "https://www.google.com")
+let testGiftList: [Gift] = [newGift, newGift2, newGift3, newGift4, newGift5, newGift6]
+
 var x24: UserGroup = UserGroup(groupName: "X24", currentYear: 2025)
