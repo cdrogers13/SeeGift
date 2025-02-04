@@ -286,7 +286,7 @@ func userAddGift(user: UserAccount, giftName: String, giftPrice: Double, giftDes
 }
 
 var newGift = Gift(name: "Test Gift", price: 100, description: "This is a test gift", image: "Test", link: "https://www.google.com")
-var newGift2 = Gift(name: "Test Gift1", price: 35, description: "This is another test gift", image: "Test1", link: "https://www.google.com")
+var newGift2 = Gift(name: "3-Body Problem", price: 35, description: "Book I would really like to read", image: "Test4", link: "https://www.amazon.com")
 var newGift3 = Gift(name: "Test Gift2", price: 25, description: "This is a test gift", image: "Test2", link: "https://www.google.com")
 var newGift4 = Gift(name: "Test Gift3", price: 75, description: "This is yet another test gift", image: "Test3", link: "https://www.google.com")
 var newGift5 = Gift(name: "Test Gift4", price: 60, description: "Yup...another test gift", image: "Test2", link: "https://www.google.com")
