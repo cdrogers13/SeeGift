@@ -76,6 +76,7 @@ struct Gift: Hashable {
     var name: String = "MISSING NAME"
     var price: Double = 0
     var description: String = ""
+    var userComments: String = ""
     var image: String = ""
     var link: String = ""
     var ranking: Int = 0

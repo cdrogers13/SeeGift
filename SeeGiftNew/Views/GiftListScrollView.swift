@@ -7,12 +7,14 @@
 
 import SwiftUI
 
-let testGift = Gift(name: "Test", price: 100.00, description: "This is a test gift", image: "Test")
+
 
 struct GiftListScrollView: View {
+    let testGift = Gift(name: "Test", price: 100.00, description: "This is a test gift", image: "Test")
     let testUserAccount = UserAccount(giftsList: testGiftList)
     var totalPrice: Double = 0
-    @State var showPopUp = false
+    @State var showDescPopup = false
+    @State var showCommentsModal = false
     
     var body: some View {
         ZStack{
@@ -30,18 +32,23 @@ struct GiftListScrollView: View {
                             Text(gift.name)
                             Text(gift.price, format: .currency(code: "USD"))
                             Button(action: {
-                                //                                 Text(gift.description)
-                                showPopUp.toggle()
+                                showDescPopup.toggle()
                                 print("Test?")
                             }, label: {
-                                Text("See Description")
+                                Text("Description")
+                            }).buttonStyle(BorderlessButtonStyle())
+                            Button(action: {
+                                showCommentsModal.toggle()
+                                print("Test?")
+                            }, label: {
+                                Text("User Comments")
                             }).buttonStyle(BorderlessButtonStyle())
                             
                         }
                     }.frame(maxWidth: .infinity, alignment: .topLeading)
                     
                 }
-                if (showPopUp == true) {
+                if (showDescPopup == true) {
                     //ADD A NEW VIEW HERE THAT WILL OVERRIDE THE ONE CURRENTLY SHOWN. WHAT I REALLY WANT IS A MODAL OF SOME KIND TO POPUP BUT MAYBE THAT WONT BE THE BEST
                     Text("HA-HA")
                 }
