@@ -28,6 +28,11 @@ struct GiftListScrollView: View {
             GiftDescriptionZoomView(currGift)
         }
         if (showList) {
+            Section(header: Text("Viewing *INSERT USER HERE*'s Gift List")) {
+                Text("Total Cost Of All User Gifts: $\(String(format: "%.2f", testUserAccount.totalGiftValue))")
+                    .font(.headline)
+            }
+
             List {
      //                if (showDescPopup) {
      //
@@ -37,11 +42,7 @@ struct GiftListScrollView: View {
      //                    }
      //                    GiftDescriptionZoomView()
      //                }
-                     Section(header: Text("Important Information")) {
-                         Text("Total Cost Of All User Gifts: $\(String(format: "%.2f", testUserAccount.totalGiftValue))")
-                             .font(.headline)
-                     }
-                     ForEach(testGiftList, id: \.self) {gift in
+                                          ForEach(testGiftList, id: \.self) {gift in
                          
                          HStack{
                              Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)

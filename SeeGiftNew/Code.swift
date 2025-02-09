@@ -5,6 +5,10 @@
 //  Created by Chris Rogers on 1/12/25.
 //
 
+
+//TODO: IMPLEMENT, SHOW AND DETERMINE A USAGE FOR GIFT RANKINGS ON PERTINENT VIEWS AND INPUT PAGES
+
+
 import Foundation
 
 class UserAccount {
