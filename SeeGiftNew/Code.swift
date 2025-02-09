@@ -286,12 +286,22 @@ func userAddGift(user: UserAccount, giftName: String, giftPrice: Double, giftDes
     user.addGiftToList(&newGift)
 }
 
-var newGift = Gift(name: "Test Gift", price: 100, description: "This is a test gift", image: "Test", link: "https://www.google.com")
+//Create JSON File upon pertinent data creation
+func createJSONFile() {
+    
+}
+
+//Save to JSON File (Once implemented) whenever a transition calls for it
+func updateJSONFileOnNavigate() {
+    
+}
+
+var newGift = Gift(name: "Mountain Bike", price: 100, description: "This is a test gift", image: "Bike", link: "https://www.google.com")
 var newGift2 = Gift(name: "3-Body Problem", price: 35, description: "Book I would really like to read", image: "Test4", link: "https://www.amazon.com")
-var newGift3 = Gift(name: "Test Gift2", price: 25, description: "This is a test gift", image: "Test2", link: "https://www.google.com")
+var newGift3 = Gift(name: "Barbie Doll", price: 25, description: "Uglah Barbie", image: "Baby Doll", link: "https://www.google.com")
 var newGift4 = Gift(name: "Test Gift3", price: 75, description: "This is yet another test gift", image: "Test3", link: "https://www.google.com")
 var newGift5 = Gift(name: "Test Gift4", price: 60, description: "Yup...another test gift", image: "Test2", link: "https://www.google.com")
 var newGift6 = Gift(name: "Test Gift5", price: 35, description: "This is a test gift", image: "Test3", link: "https://www.google.com")
-let testGiftList: [Gift] = [newGift, newGift2, newGift3, newGift4, newGift5, newGift6]
+let testGiftList: [Gift] = [newGift, newGift2, newGift3]
 
 var x24: UserGroup = UserGroup(groupName: "X24", currentYear: 2025)

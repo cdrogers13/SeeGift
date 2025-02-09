@@ -9,14 +9,35 @@ import SwiftUI
 
 
 struct GiftDescriptionZoomView: View {
-    let testGift = testGiftList[0]
+    private var gift: Gift
+    init(_ gift: Gift) {
+        self.gift = gift
+    }
+    let testGift = testGiftList[1]
     var body: some View {
-        Text(testGift.name).font(.largeTitle)
-        Image(testGift.image).resizable().scaledToFit().cornerRadius(120)
-        Text(testGift.description)
+        Text(gift.name).font(.largeTitle)
+        Image(gift.image).resizable().scaledToFit().cornerRadius(120)
+        VStack(alignment: .leading){
+            HStack{
+                Text("Purchasing Link: ")
+                Text(gift.link)
+                
+            }
+            HStack{
+                Text("Gift Price: ")
+                Text(gift.price, format: .currency(code: "USD"))
+            }
+        }
+        VStack{
+            //Text("Gift Description")
+            Text(gift.description)
+        }.padding(.top)
+        
+        Text(gift.userComments)
+        
     }
 }
 
 #Preview {
-    GiftDescriptionZoomView()
+    GiftDescriptionZoomView(testGiftList[0])
 }
