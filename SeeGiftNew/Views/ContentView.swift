@@ -13,10 +13,11 @@ struct ContentView: View {
         
         
             VStack{
+                //Text("HOME PAGE")
                 TabView{
-                    Text("HOME PAGE").tabItem({
+                    UserGiftListView().tabItem({
                         Label("Home", systemImage: "house")
-                    })
+                    }).background(.black).foregroundStyle(.white)
                     UserSettingsView().tabItem({
                         Label("Account", systemImage: "person.circle")
                     })

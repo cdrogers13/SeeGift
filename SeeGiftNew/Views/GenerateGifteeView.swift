@@ -61,10 +61,10 @@ struct GenerateGifteeView: View {
                 Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in showResult = true}})
             {
                 ZStack {
-                    Circle().frame(width: 350, height: 350).background(Color.blue).cornerRadius(360)
+                    Circle()
                     Label("Generate Your Giftee!", systemImage: "gift").foregroundStyle(.white)
                 }
-            }
+            }.contentShape(Circle())
             if (showResult) {
                 Text("You Got: \(Giftee)!") //This is string literal notation
                 //Text("You Got: " + Giftee) //This is normal notation i usually use
