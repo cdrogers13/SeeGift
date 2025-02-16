@@ -47,15 +47,16 @@ struct UserSettingsView: View {
                     
                     NavigationLink(destination: GenerateGifteeView()) {
                         Text("Generate Giftee")
-                    }.padding().buttonStyle(BorderedProminentButtonStyle()).padding()
+                    }.padding().buttonStyle(BorderedProminentButtonStyle()).foregroundStyle(.black)
+                        .padding()
                 }
                 HStack {
                     Button("Save Settings") {
                         
-                    }.buttonStyle(BorderedProminentButtonStyle())
+                    }.buttonStyle(BorderedProminentButtonStyle()).foregroundStyle(.black)
                     Button("Cancel") {
                         
-                    }.buttonStyle(BorderedProminentButtonStyle())
+                    }.buttonStyle(BorderedProminentButtonStyle()).foregroundStyle(.black)
                 }.navigationTitle(Text("User Settings")).toolbar {//the toolbar is the gear at the top right in this case
                     //the navigation title is what shows up at the top of a screen when it's navigated to I guess?
                     

@@ -10,65 +10,65 @@ import SwiftUI
 struct ContentView: View {
     @State private var value = 1
     var body: some View {
-        
-        
-            VStack{
-                //Text("HOME PAGE")
-                TabView{
+        VStack{
+            Section (header: Label ("GiftBee", systemImage: "gift").font(.largeTitle).padding()) {}
+            //Text("HOME PAGE")
+            TabView{
+                Group {
                     UserGiftListView().tabItem({
                         Label("Home", systemImage: "house")
-                    }).background(.black).foregroundStyle(.white)
+                    })
                     UserSettingsView().tabItem({
                         Label("Account", systemImage: "person.circle")
                     })
                     AdminGroupSettingsView().tabItem({
                         Label("Groups", systemImage: "person.3.fill")
                     })
-                }
-//                NavigationView {
-//                    
-//                ZStack {
-//                    navigationTitle(Text("SeeGift"))
-//                    Color.green
-//                    VStack (alignment: .leading) {
-//                        NavigationLink(destination: GenerateGifteeView())
-//                        {
-//                            Text("Get your giftee!")
-//                        }
-//                        NavigationLink(destination: SignUpPage())
-//                        {
-//                            Text("Create Account")
-//                        }
-//                        NavigationLink(destination: AdminGroupSettingsView())
-//                        {
-//                            Text("Group Settings")
-//                        }
-//                    }
-//                }
-//            
-//            
-//            
-//                //GenerateGifteeView()
-//    //            SignUpPage()
-//    //            Image(systemName: "globe")
-//    //                .imageScale(.large)
-//    //                .foregroundStyle(.tint)
-//    //            Text("Hello, world!")
-//    //                .padding()
-//    //
-//    //            HStack (){
-//    //                Image("Test")
-//    //                    .resizable()
-//    //                    .scaledToFit()
-//    //                    .frame(width:100, height:100)
-//    //                Rectangle()
-//    //                    .fill(Color.blue)
-//    //             }
-//        
-//            }
-//            .padding()
-        }
-        
+                }.toolbarBackground(.visible, for: .tabBar).toolbarBackground(.black, for: .tabBar)
+            }
+    //                NavigationView {
+    //
+    //                ZStack {
+    //                    navigationTitle(Text("SeeGift"))
+    //                    Color.green
+    //                    VStack (alignment: .leading) {
+    //                        NavigationLink(destination: GenerateGifteeView())
+    //                        {
+    //                            Text("Get your giftee!")
+    //                        }
+    //                        NavigationLink(destination: SignUpPage())
+    //                        {
+    //                            Text("Create Account")
+    //                        }
+    //                        NavigationLink(destination: AdminGroupSettingsView())
+    //                        {
+    //                            Text("Group Settings")
+    //                        }
+    //                    }
+    //                }
+    //
+    //
+    //
+    //                //GenerateGifteeView()
+    //    //            SignUpPage()
+    //    //            Image(systemName: "globe")
+    //    //                .imageScale(.large)
+    //    //                .foregroundStyle(.tint)
+    //    //            Text("Hello, world!")
+    //    //                .padding()
+    //    //
+    //    //            HStack (){
+    //    //                Image("Test")
+    //    //                    .resizable()
+    //    //                    .scaledToFit()
+    //    //                    .frame(width:100, height:100)
+    //    //                Rectangle()
+    //    //                    .fill(Color.blue)
+    //    //             }
+    //
+    //            }
+    //            .padding()
+        }.accentColor(.yellow).preferredColorScheme(.dark)
     }
 }
 

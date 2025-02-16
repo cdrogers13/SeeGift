@@ -9,14 +9,20 @@ import SwiftUI
 
 
 struct GiftDescriptionZoomView: View {
-    private var gift: Gift
-    init(_ gift: Gift) {
-        self.gift = gift
-    }
+    @Binding var showList: Bool
+    @Binding var showDescPopup: Bool
+    @Binding var gift: Gift
+    
     let testGift = testGiftList[1]
     var body: some View {
         VStack{
             Text(gift.name).font(.largeTitle)
+            ZStack {
+                Button("Close") {
+                    showList.toggle() //List and description popup should always be opposites
+                    showDescPopup.toggle()
+                }.buttonStyle(CloseButton())
+            }
             Image(gift.image).resizable().scaledToFit().cornerRadius(120)
             VStack(alignment: .leading){
                 HStack{
@@ -41,5 +47,5 @@ struct GiftDescriptionZoomView: View {
 }
 
 #Preview {
-    GiftDescriptionZoomView(testGiftList[0])
+    GiftDescriptionZoomView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[1]))
 }

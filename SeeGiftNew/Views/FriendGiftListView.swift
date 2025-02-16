@@ -26,7 +26,7 @@ struct FriendGiftListView: View {
                     showList.toggle() //List and description popup should always be opposites
                     showDescPopup.toggle()
                 }
-                GiftDescriptionZoomView(currGift)
+                //GiftDescriptionZoomView(currGift)
             }
             if (showList) {
                 Section(header: Text("Viewing *INSERT USER HERE*'s Gift List")) {
@@ -45,7 +45,9 @@ struct FriendGiftListView: View {
          //                    GiftDescriptionZoomView()
          //                }
                                               ForEach(testGiftList, id: \.self) {gift in
-                             
+                                                  if(gift.isGifted) {
+                                                      Label("Gifted", systemImage: "checkmark.circle.fill").labelStyle(FlippedLabelStyle(textColor: .black, picColor: .blue))
+                                                  }
                              HStack{
                                  Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
                                  Spacer()

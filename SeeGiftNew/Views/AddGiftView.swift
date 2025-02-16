@@ -64,7 +64,7 @@ struct AddGiftView: View {
                         Text("Save And Finish")
                     }.buttonStyle(BorderedProminentButtonStyle())
                 }
-            }
+            }.accentColor(.yellow)
         }
     }
 }

@@ -33,15 +33,15 @@ struct AdminGroupSettingsView: View {
                     //NavigationLink(destination: Giftpairingsview){} TODO: I WANT THIS TO BE A POPUP, OR MODAL TYPE OF DISPLAY THAT JUST SHOWS A TABLE OR SOMETHING MAYBE?
                     Button("View Gift Pairings") {
                         //Modal could possibly be put in here as well instead of as a navigation
-                    }.buttonStyle(BorderedProminentButtonStyle())
+                    }.buttonStyle(BorderedProminentButtonStyle()).foregroundStyle(.black)
                 }.frame(height: 300, alignment: .top)
                 HStack {
                     Button("Save Settings") {
                         
-                    }.buttonStyle(BorderedProminentButtonStyle())
+                    }.buttonStyle(BorderedProminentButtonStyle()).foregroundStyle(.black)
                     Button("Cancel") {
                         
-                    }.buttonStyle(BorderedProminentButtonStyle())
+                    }.buttonStyle(BorderedProminentButtonStyle()).foregroundStyle(.black)
                 }
             }
         }
