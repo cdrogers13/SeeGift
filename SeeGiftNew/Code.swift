@@ -8,7 +8,10 @@
 
 /*TODO: -IMPLEMENT, SHOW AND DETERMINE A USAGE FOR GIFT RANKINGS ON PERTINENT VIEWS AND INPUT PAGES
             --Might want to put in the capability for user to rearrange their ranking order through drag and drop. Would be good practice at the very least
-*/
+ 
+ -IMPLEMENT FUNCTIONAL LINKS ON THE GIFTS
+ 
+ */
 
 
 import Foundation

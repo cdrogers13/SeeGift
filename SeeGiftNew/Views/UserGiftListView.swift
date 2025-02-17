@@ -24,7 +24,7 @@ struct UserGiftListView: View {
                 GiftDescriptionZoomView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift)
             }
             if (showList) {
-                ScrollView {
+                ScrollView (showsIndicators: false) {
                     ForEach(testGiftList, id: \.self) {gift in
                         Button(action: {
                             currGift = gift
@@ -54,7 +54,7 @@ struct UserGiftListView: View {
                             }
                             
                         }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
-                    }/*.listRowBackground(Color.red)*/
+                    }.listRowBackground(Color.black)
                     //Color.black.ignoresSafeArea(.all)
                 }.padding()
                 

@@ -29,7 +29,8 @@ struct GiftDescriptionZoomView: View {
             VStack(alignment: .leading){
                 HStack{
                     Text("Purchasing Link: ")
-                    Text(gift.link)
+                    Link(gift.link, destination: URL(string: (gift.link))!)
+                    //Text(gift.link)
                     
                 }
                 HStack{

@@ -11,6 +11,72 @@ struct CustomComponents: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
         Button("PUSH ME") {}.buttonStyle(CloseButton())
+        ScrollView (.horizontal, showsIndicators: false) {
+        LazyHStack {
+            ForEach(testGiftList, id: \.self) {gift in
+                
+                Button(action: {
+                }) {
+                    ZStack(alignment: .topTrailing) {
+                        HStack{
+                            //                                Text("#\(gift.ranking)")
+                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+                            Spacer()
+                            VStack (alignment: .trailing){
+                                Text(gift.name)
+                                Text(gift.price, format: .currency(code: "USD"))
+                                //                                    Button(action: {
+                                //                                        currGift = gift
+                                //                                        showDescPopup.toggle()
+                                //                                        showList.toggle() //List and description popup should always be opposites
+                                //                                        print("Test?")
+                                //                                    }, label: {
+                                //                                        Text("Details")
+                                //                                    }).buttonStyle(BorderlessButtonStyle())
+                            }
+                        }.padding()
+                        Text("#\(gift.ranking)").padding()
+                    }
+                    
+                }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
+            }.listRowBackground(Color.black)
+            //LazyHStack {}
+        }
+    }
+        
+        ScrollView (.horizontal) {
+        LazyHStack {
+            ForEach(testGiftList, id: \.self) {gift in
+                
+                Button(action: {
+                }) {
+                    ZStack(alignment: .topTrailing) {
+                        HStack{
+                            //                                Text("#\(gift.ranking)")
+                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+                            Spacer()
+                            VStack (alignment: .trailing){
+                                Text(gift.name)
+                                Text(gift.price, format: .currency(code: "USD"))
+                                //                                    Button(action: {
+                                //                                        currGift = gift
+                                //                                        showDescPopup.toggle()
+                                //                                        showList.toggle() //List and description popup should always be opposites
+                                //                                        print("Test?")
+                                //                                    }, label: {
+                                //                                        Text("Details")
+                                //                                    }).buttonStyle(BorderlessButtonStyle())
+                            }
+                        }.padding()
+                        Text("#\(gift.ranking)").padding()
+                    }
+                    
+                }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
+            }.listRowBackground(Color.black)
+            //LazyHStack {}
+        }
+    }
+        
     }
 }
 
@@ -65,13 +131,14 @@ struct FlippedLabelStyle: LabelStyle {
 struct CloseButton: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         ZStack {
-            Circle().fill(.blue).frame(width: 25, height: 25)
+            Circle().fill(.yellow).frame(width: 25, height: 25)
             Image(systemName: "xmark")
                 .foregroundColor(.black)
                 .font(.system(size: 10))
         }
     }
 }
+
 
 #Preview {
     CustomComponents()

@@ -62,7 +62,7 @@ struct GenerateGifteeView: View {
             {
                 ZStack {
                     Circle()
-                    Label("Generate Your Giftee!", systemImage: "gift").foregroundStyle(.white)
+                    Label("Generate Your Giftee!", systemImage: "gift").foregroundStyle(.black)
                 }
             }.contentShape(Circle())
             if (showResult) {
