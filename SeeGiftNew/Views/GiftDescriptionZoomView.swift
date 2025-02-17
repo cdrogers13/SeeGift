@@ -17,13 +17,15 @@ struct GiftDescriptionZoomView: View {
     var body: some View {
         VStack{
             Text(gift.name).font(.largeTitle)
-            ZStack {
-                Button("Close") {
-                    showList.toggle() //List and description popup should always be opposites
-                    showDescPopup.toggle()
-                }.buttonStyle(CloseButton())
+            Button("Close") {
+                showList.toggle() //List and description popup should always be opposites
+                showDescPopup.toggle()
+            }.buttonStyle(CloseButton()).padding([.bottom], 8)
+            ZStack(alignment: .top) {
+                Image(gift.image).resizable().scaledToFit().cornerRadius(120)
+                
             }
-            Image(gift.image).resizable().scaledToFit().cornerRadius(120)
+            
             VStack(alignment: .leading){
                 HStack{
                     Text("Purchasing Link: ")
@@ -47,5 +49,5 @@ struct GiftDescriptionZoomView: View {
 }
 
 #Preview {
-    GiftDescriptionZoomView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[1]))
+    GiftDescriptionZoomView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[0]))
 }

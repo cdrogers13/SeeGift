@@ -65,7 +65,7 @@ struct FlippedLabelStyle: LabelStyle {
 struct CloseButton: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         ZStack {
-            Circle().fill(.blue).frame(width: 15, height: 15)
+            Circle().fill(.blue).frame(width: 25, height: 25)
             Image(systemName: "xmark")
                 .foregroundColor(.black)
                 .font(.system(size: 10))
