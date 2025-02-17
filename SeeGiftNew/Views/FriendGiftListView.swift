@@ -21,69 +21,97 @@ struct FriendGiftListView: View {
     var body: some View {
         VStack{
             if (showDescPopup) {
-                //ADD A NEW VIEW HERE THAT WILL OVERRIDE THE ONE CURRENTLY SHOWN. WHAT I REALLY WANT IS A MODAL OF SOME KIND TO POPUP BUT MAYBE THAT WONT BE THE BEST
-                Button("Close") {
-                    showList.toggle() //List and description popup should always be opposites
-                    showDescPopup.toggle()
-                }
-                //GiftDescriptionZoomView(currGift)
+                GiftDescriptionZoomView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift)
             }
             if (showList) {
                 Section(header: Text("Viewing *INSERT USER HERE*'s Gift List")) {
                     Text("Total Cost Of All User Gifts: $\(String(format: "%.2f", testUserAccount.totalGiftValue))")
                         .font(.headline)
                 }
+                ScrollView (showsIndicators: false) {
+                    ForEach(testGiftList, id: \.self) {gift in
+                        if(gift.isGifted) {
+                            IsGiftedButton(showDescPopup: $showDescPopup, showList: $showList, currGift: $currGift, gift: gift)
+                        }
+                        else {
+                            StandardGiftButton(showDescPopup: $showDescPopup, showList: $showList, currGift: $currGift, gift: gift)
+                        }
+                    }.listRowBackground(Color.black)
+                    //Color.black.ignoresSafeArea(.all)
+                }.padding()
                 
-                List {
-                    
-         //                if (showDescPopup) {
-         //
-         //                    //ADD A NEW VIEW HERE THAT WILL OVERRIDE THE ONE CURRENTLY SHOWN. WHAT I REALLY WANT IS A MODAL OF SOME KIND TO POPUP BUT MAYBE THAT WONT BE THE BEST
-         //                    Button("Close") {
-         //                        showDescPopup.toggle()
-         //                    }
-         //                    GiftDescriptionZoomView()
-         //                }
-                                              ForEach(testGiftList, id: \.self) {gift in
-                                                  if(gift.isGifted) {
-                                                      Label("Gifted", systemImage: "checkmark.circle.fill").labelStyle(FlippedLabelStyle(textColor: .black, picColor: .blue))
-                                                  }
-                             HStack{
-                                 Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
-                                 Spacer()
-                                 VStack (alignment: .trailing){
-                                     Text(gift.name)
-                                     Text(gift.price, format: .currency(code: "USD"))
-                                     Button(action: {
-                                         currGift = gift
-                                         showDescPopup.toggle()
-                                         showList.toggle() //List and description popup should always be opposites
-                                         print("Test?")
-                                     }, label: {
-                                         Text("Details")
-                                     }).buttonStyle(BorderlessButtonStyle())
-         //                            Button(action: {
-         //                                showCommentsModal.toggle()
-         //                                print("Test?")
-         //                            }, label: {
-         //                                Text("User Comments")
-         //                            }).buttonStyle(BorderlessButtonStyle())
-                                     
-                                 }
-                             }.frame(maxWidth: .infinity, alignment: .topLeading)
-                             
-                         }
-//                         Section(footer: Text("More Information")) {
-//                             Text("Contact us as (212) 555 3231")
-//                         }
-                      }
-                 
             }
         }
-        
-       
     }
 }
+
+
+struct StandardGiftButton : View {
+    @Binding var showDescPopup : Bool
+    @Binding var showList : Bool
+    @Binding var currGift: Gift
+    var gift: Gift = Gift()
+    
+    var body: some View {
+        Button(action: {
+            currGift = gift
+            showDescPopup.toggle()
+            showList.toggle() //List and description popup should always be opposites
+            print("Test?")
+        }) {
+            VStack {
+                
+                ZStack(alignment: .topTrailing) {
+                    HStack{
+                        //                                Text("#\(gift.ranking)")
+                        Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+                        Spacer()
+                        VStack (alignment: .trailing){
+                            Text(gift.name)
+                            Text(gift.price, format: .currency(code: "USD"))
+                            
+                        }
+                    }.padding()
+                    Text("#\(gift.ranking)").padding()
+                }
+            }
+        }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
+    }
+}
+
+struct IsGiftedButton : View {
+    @Binding var showDescPopup : Bool
+    @Binding var showList : Bool
+    @Binding var currGift: Gift
+    var gift: Gift = Gift()
+    
+    var body: some View {
+       
+            Button(action: {
+                currGift = gift
+                showDescPopup.toggle()
+                showList.toggle()
+                print("Test?")
+            }) {
+                VStack (alignment: .center) {
+                    Label("GIFTED!", systemImage: "gift.circle.fill").labelStyle(FlippedLabelStyle(textColor: .black, picColor: .green))
+                    ZStack(alignment: .topTrailing) {
+                        HStack{
+                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200).padding([.bottom])
+                            Spacer()
+                            VStack (alignment: .trailing){
+                                Text(gift.name)
+                                Text(gift.price, format: .currency(code: "USD"))
+                            }.padding()
+                        }
+                        Text("#\(gift.ranking)").padding()
+                    }
+                }
+            }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
+    }
+}
+
+
 
 #Preview {
     FriendGiftListView()

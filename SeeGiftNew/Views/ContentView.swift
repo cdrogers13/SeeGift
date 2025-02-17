@@ -11,7 +11,10 @@ struct ContentView: View {
     @State private var value = 1
     var body: some View {
         VStack{
-            Section (header: Label ("GiftBee", systemImage: "gift").font(.largeTitle).padding()) {}
+            Section (header: Label {Text("GiftBee")}
+                     icon: {
+                Image(systemName: "gift").foregroundStyle(.yellow)
+                     }) {}.font(.largeTitle).padding()
             //Text("HOME PAGE")
             TabView{
                 Group {
