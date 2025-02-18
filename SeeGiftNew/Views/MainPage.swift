@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainPage: View {
     @State private var value = 1
     var body: some View {
         VStack{
             Section (header: Label {Text("GiftBee")}
                      icon: {
                 Image(systemName: "gift").foregroundStyle(.yellow)
-                     }) {}.font(.largeTitle).padding()
+                     }) {}.font(.largeTitle)
             //Text("HOME PAGE")
             TabView{
                 Group {
@@ -76,5 +76,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    MainPage()
 }

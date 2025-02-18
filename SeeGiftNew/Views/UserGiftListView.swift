@@ -17,6 +17,8 @@ struct UserGiftListView: View {
     @State var showList = true
     @State var showCommentsModal = false
     @State var currGift: Gift = Gift()
+    @State var newList = testGiftList
+    @State var createdUser: UserAccount = UserAccount()
     
     var body: some View {
         VStack{
@@ -24,39 +26,49 @@ struct UserGiftListView: View {
                 GiftDescriptionZoomView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift)
             }
             if (showList) {
-                ScrollView (showsIndicators: false) {
-                    ForEach(testGiftList, id: \.self) {gift in
-                        Button(action: {
-                            currGift = gift
-                            showDescPopup.toggle()
-                            showList.toggle() //List and description popup should always be opposites
-                            print("Test?")
-                        }) {
-                            ZStack(alignment: .topTrailing) {
-                                HStack{
-    //                                Text("#\(gift.ranking)")
-                                    Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
-                                    Spacer()
-                                    VStack (alignment: .trailing){
-                                        Text(gift.name)
-                                        Text(gift.price, format: .currency(code: "USD"))
-    //                                    Button(action: {
-    //                                        currGift = gift
-    //                                        showDescPopup.toggle()
-    //                                        showList.toggle() //List and description popup should always be opposites
-    //                                        print("Test?")
-    //                                    }, label: {
-    //                                        Text("Details")
-    //                                    }).buttonStyle(BorderlessButtonStyle())
-                                    }
-                                }.padding()
-                                Text("#\(gift.ranking)").padding()
-                            }
-                            
-                        }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
-                    }.listRowBackground(Color.black)
-                    //Color.black.ignoresSafeArea(.all)
-                }.padding()
+                NavigationView {
+                    ScrollView (showsIndicators: false) {
+                        ForEach(newList, id: \.self) {gift in
+                            Button(action: {
+                                currGift = gift
+                                showDescPopup.toggle()
+                                showList.toggle() //List and description popup should always be opposites
+                                print("Test?")
+                            }) {
+                                ZStack(alignment: .topTrailing) {
+                                    HStack{
+                                        //                                Text("#\(gift.ranking)")
+                                        Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+                                        Spacer()
+                                        VStack (alignment: .trailing){
+                                            Text(gift.name)
+                                            Text(gift.price, format: .currency(code: "USD"))
+                                            //                                    Button(action: {
+                                            //                                        currGift = gift
+                                            //                                        showDescPopup.toggle()
+                                            //                                        showList.toggle() //List and description popup should always be opposites
+                                            //                                        print("Test?")
+                                            //                                    }, label: {
+                                            //                                        Text("Details")
+                                            //                                    }).buttonStyle(BorderlessButtonStyle())
+                                        }
+                                    }.padding()
+                                    Text("#\(gift.ranking)").padding()
+                                }
+                                
+                            }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
+                        }.listRowBackground(Color.black)
+                        //Color.black.ignoresSafeArea(.all)
+                        NavigationLink (destination: AddGiftView(createdUser)){
+                            Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
+                        }.padding([.bottom])
+                    }.padding()
+                }
+               
+                
+//                Button("PUSH") {
+//                    newList.append(testGift)
+//                }
                 
             }
         }//.background(Color.black).foregroundStyle(.white)

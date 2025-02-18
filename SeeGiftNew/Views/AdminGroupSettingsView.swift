@@ -19,10 +19,10 @@ struct AdminGroupSettingsView: View {
                 VStack {
                     //Need to add some help tooltip descriptions to these somehow
                     Toggle(isOn: $canSpouseMatch, label: {
-                        Text("Can Spouses Match")
+                        Text("Spouses Can Match")
                     })
                     Toggle(isOn: $canPreviousMatch, label: {
-                        Text("Can Previous Year Match")
+                        Text("Previous Year Can Match")
                     })
                     //Put toggles and numbers in this HStack. Padding on the backside to give a nice gap to the gift pairings button
                     HStack(spacing: 130) {

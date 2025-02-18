@@ -57,14 +57,14 @@ struct AddGiftView: View {
                         link = ""
                         ranking = 0
                         description = ""
-                    }.buttonStyle(BorderedProminentButtonStyle())
+                    }.buttonStyle(BorderedProminentButtonStyle()).foregroundStyle(.black)
                     
                     NavigationLink(destination: LoginPage().navigationBarBackButtonHidden(true)) {
                         //TODO: Need to add a confirmation here to make sure user is done adding gifts
                         Text("Save And Finish")
-                    }.buttonStyle(BorderedProminentButtonStyle())
-                }
-            }.accentColor(.yellow)
+                    }.buttonStyle(BorderedProminentButtonStyle()).foregroundStyle(.black)
+                }.padding()
+            }
         }
     }
 }

@@ -9,7 +9,13 @@
 /*TODO: -IMPLEMENT, SHOW AND DETERMINE A USAGE FOR GIFT RANKINGS ON PERTINENT VIEWS AND INPUT PAGES
             --Might want to put in the capability for user to rearrange their ranking order through drag and drop. Would be good practice at the very least
  
- -IMPLEMENT FUNCTIONAL LINKS ON THE GIFTS
+ -IMPLEMENT FUNCTIONAL LINKS ON THE GIFTS  (DONE! OPENS IN BROWSER, NEED TO TEST IF THESE LINKS ALLOW THEM TO OPEN IN APPS. I IMAGINE IT USES USER DEFAULT PREFERENCES)
+ 
+ -LEARN ABOUT AND BEGIN WORK ON THE SETTINGS FEATURES AND THE COGS ICON ON THE GROUP SETTINGS SCREEN
+ 
+ -IMPLEMENT NAVIGATION LINKS CONNECTED TO BUTTONS ON THE SETTINGS PAGES
+ 
+ -CREATE GROUP PAGE VIEW AND LINK IT TO GROUPS TAB. NEED THIS TO BE NAVIGABLE ONCE I FIGURE OUT WHAT I WANT IT TO BE ABLE TO DO
  
  */
 
@@ -112,7 +118,7 @@ enum GroupType : String {
     case friend
 }
 
-class UserGroup {
+class UserGroup: Identifiable {
     var groupName: String
     var groupAdmins: [UserAccount]
     var members: [UserAccount]
@@ -121,6 +127,7 @@ class UserGroup {
     var settings: GroupSettings
     var currentYear: Int
     var availableGiftees: [UserAccount]
+    var groupImage: String = ""
     //var takenGiftees: [String] = [] //This will be user name of people taken in the group already
     
     init(groupName: String = "Test Group", members: [UserAccount] = [], groupAdmins: [UserAccount] = [], groupType: GroupType = GroupType.friend, giftGivingCombos: [Int : [String : String]] = [:], settings: GroupSettings = GroupSettings(), currentYear: Int, availableGiftees: [UserAccount] = []) {
@@ -305,12 +312,34 @@ func updateJSONFileOnNavigate() {
     
 }
 
+//UserAccounts
+var chris = UserAccount(firstName: "Chris", lastName: "Rogers", userName: "juice", spouse: "Brigette")
+var brigette = UserAccount(firstName: "Brigette", lastName: "Rogers", userName: "brig", spouse: "Chris")
+var collin = UserAccount(firstName: "Collin", lastName: "Rogers", userName: "cdrog", spouse: "Megan")
+var meg = UserAccount(firstName: "Megan", lastName: "Rogers", userName: "megv", spouse: "Collin")
+var Aaron = UserAccount(firstName: "Aaron", lastName: "Christopher", userName: "aaron", spouse: "")
+var Nick = UserAccount(firstName: "Nick", lastName: "Mourning", userName: "nickm", spouse: "")
+var Josh = UserAccount(firstName: "Josh", lastName: "Mourning", userName: "joshm", spouse: "")
+var Bella = UserAccount(firstName: "Bella", lastName: "Mourning", userName: "bellam", spouse: "")
+var Ken = UserAccount(firstName: "Ken", lastName: "Mourning", userName: "kenm", spouse: "mariem")
+var Marie = UserAccount(firstName: "Marie", lastName: "Mourning", userName: "mariem", spouse: "kenm")
+
+//UserGroups
+var mourningFamily: UserGroup = UserGroup(groupName: "Mourning Family", members: [chris, brigette, Nick, Josh, Bella, Ken, Marie], groupAdmins: [chris, brigette], groupType: .family, currentYear: 2025, availableGiftees: [chris, brigette, Nick, Josh, Bella, Ken, Marie])
+
+var x24: UserGroup = UserGroup(groupName: "X24", members: [chris, brigette, collin, meg, Aaron], groupAdmins: [chris, brigette], groupType: .family, currentYear: 2025, availableGiftees: [chris, brigette, collin, meg, Aaron])
+
+
+//Gifts
+
 var newGift = Gift(name: "Mountain Bike", price: 100, description: "This is a test gift", image: "Bike", link: "https://www.google.com", ranking: 1)
 var newGift2 = Gift(name: "3-Body Problem", price: 35, description: "Book I would really like to read", image: "Test4", link: "https://www.amazon.com", ranking: 2, isGifted: true)
 var newGift3 = Gift(name: "Barbie Doll", price: 25, description: "Uglah Barbie", image: "Baby Doll", link: "https://www.google.com", ranking: 3)
 var newGift4 = Gift(name: "Test Gift3", price: 75, description: "This is yet another test gift", image: "Test3", link: "https://www.google.com")
 var newGift5 = Gift(name: "Test Gift4", price: 60, description: "Yup...another test gift", image: "Test2", link: "https://www.google.com")
 var newGift6 = Gift(name: "Test Gift5", price: 35, description: "This is a test gift", image: "Test3", link: "https://www.google.com")
-let testGiftList: [Gift] = [newGift, newGift2, newGift3]
+var testGiftList: [Gift] = [newGift, newGift2, newGift3]
 
-var x24: UserGroup = UserGroup(groupName: "X24", currentYear: 2025)
+var userGroupsArray = [mourningFamily, x24]
+
+

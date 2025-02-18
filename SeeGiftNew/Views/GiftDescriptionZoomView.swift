@@ -25,11 +25,12 @@ struct GiftDescriptionZoomView: View {
                 Image(gift.image).resizable().scaledToFit().cornerRadius(120)
                 
             }
-            
             VStack(alignment: .leading){
                 HStack{
-                    Text("Purchasing Link: ")
-                    Link(gift.link, destination: URL(string: (gift.link))!)
+                    if let url = URL(string: "\(gift.link)") {
+                        Text("Purchasing Link: ")
+                        Link(gift.link, destination: url)
+                    }
                     //Text(gift.link)
                     
                 }
