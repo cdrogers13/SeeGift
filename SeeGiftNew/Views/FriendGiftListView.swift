@@ -11,7 +11,7 @@ import SwiftUI
 
 struct FriendGiftListView: View {
     let testGift = Gift(name: "Test", price: 100.00, description: "This is a test gift", image: "Test")
-    let testUserAccount = UserAccount(giftsList: testGiftList)
+    @State var selectedFriend = UserAccount(giftsList: testGiftList)
     var totalPrice: Double = 0
     @State var showDescPopup = false
     @State var showList = true
@@ -21,25 +21,30 @@ struct FriendGiftListView: View {
     var body: some View {
         VStack{
             if (showDescPopup) {
-                GiftDescriptionZoomView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift)
+                GiftDetailView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift)
             }
             if (showList) {
-                Section(header: Text("Viewing *INSERT USER HERE*'s Gift List")) {
-                    Text("Total Cost Of All User Gifts: $\(String(format: "%.2f", testUserAccount.totalGiftValue))")
-                        .font(.headline)
-                }
-                ScrollView (showsIndicators: false) {
-                    ForEach(testGiftList, id: \.self) {gift in
-                        if(gift.isGifted) {
-                            IsGiftedButton(showDescPopup: $showDescPopup, showList: $showList, currGift: $currGift, gift: gift)
-                        }
-                        else {
-                            StandardGiftButton(showDescPopup: $showDescPopup, showList: $showList, currGift: $currGift, gift: gift)
-                        }
-                    }.listRowBackground(Color.black)
-                    //Color.black.ignoresSafeArea(.all)
-                }.padding()
+                Section(header: Text("Viewing \(selectedFriend.firstName)'s Gift List")) {}
                 
+                if (selectedFriend.giftsList.isEmpty) {
+                    Image("Empty Gift List").resizable()
+                    Text("\(selectedFriend.firstName)'s Gift List is Empty. Let them know they should fill it out!").multilineTextAlignment(.center)
+                }
+                else {
+                    Text("Total Cost Of All User Gifts: $\(String(format: "%.2f", selectedFriend.totalGiftValue))")
+                            .font(.headline)
+                    ScrollView (showsIndicators: false) {
+                        ForEach(selectedFriend.giftsList, id: \.self) {gift in
+                            if(gift.isGifted) {
+                                IsGiftedButton(showDescPopup: $showDescPopup, showList: $showList, currGift: $currGift, gift: gift)
+                            }
+                            else {
+                                StandardGiftButton(showDescPopup: $showDescPopup, showList: $showList, currGift: $currGift, gift: gift)
+                            }
+                        }.listRowBackground(Color.black)
+                        //Color.black.ignoresSafeArea(.all)
+                    }.padding()
+                }
             }
         }
     }
@@ -72,7 +77,11 @@ struct StandardGiftButton : View {
                             
                         }
                     }.padding()
-                    Text("#\(gift.ranking)").padding()
+                    if (gift.isMostWanted) {
+                        Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
+                    }
+                   
+                    //Text("#\(gift.ranking)").padding()
                 }
             }
         }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
@@ -104,7 +113,10 @@ struct IsGiftedButton : View {
                                 Text(gift.price, format: .currency(code: "USD"))
                             }.padding()
                         }
-                        Text("#\(gift.ranking)").padding()
+                        if (gift.isMostWanted) {
+                            Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
+                        }
+                        //Text("#\(gift.ranking)").padding()
                     }
                 }
             }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))

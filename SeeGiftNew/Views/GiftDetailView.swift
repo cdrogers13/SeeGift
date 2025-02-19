@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct GiftDescriptionZoomView: View {
+struct GiftDetailView: View {
     @Binding var showList: Bool
     @Binding var showDescPopup: Bool
     @Binding var gift: Gift
@@ -51,5 +51,5 @@ struct GiftDescriptionZoomView: View {
 }
 
 #Preview {
-    GiftDescriptionZoomView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[0]))
+    GiftDetailView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[0]))
 }

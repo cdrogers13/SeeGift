@@ -17,18 +17,21 @@
  
  -CREATE GROUP PAGE VIEW AND LINK IT TO GROUPS TAB. NEED THIS TO BE NAVIGABLE ONCE I FIGURE OUT WHAT I WANT IT TO BE ABLE TO DO
  
+ -NEED TO FIGURE OUT HOW TO FIX THE ISSUE OF MULTI-LEVEL NAVIGATIONLINKS PUTTING MORE THAN ONE BACK BUTTON ON SCREEN. MY GUESS IS TO USE THE STACK INSTEAD OF THE LINKS
+ 
+ -THINK I WANT TO CHANGE RANKINGS TO ONE MOST WANTED GIFT PER LIST INSTEAD OF A RANKING SYSTEM. PROBABLY EASIER ON ALL FRONTS TO BE HONEST
  */
 
 
 import Foundation
 
-class UserAccount {
+class UserAccount: Identifiable {
     var firstName: String = "Test"
     var lastName: String = "Account"
     var userName: String = "TestAccount" //This needs to be unique
     var password: String = "Password"
     var spouse = ""
-    //var profilePicture: Image?
+    var profilePicture: String = "Profile Silhouette"
     //Profile PIcture maybe? Not sure how to do this yet obviously
     var giftsList: [Gift] = []
     var friendsList: [UserAccount] = []
@@ -97,6 +100,7 @@ struct Gift: Hashable {
     var ranking: Int = 0
     var isGifted: Bool = false
     var giftID: Int = Int.random(in: 0...1000000000)
+    var isMostWanted: Bool = false
     
 //    init(name: String = "MISSING NAME", price: Double = 0, description: String = "", link: String = "", ranking: Int = 0) {
 //        self.name = name
@@ -312,8 +316,20 @@ func updateJSONFileOnNavigate() {
     
 }
 
+
+//Gifts
+
+var newGift = Gift(name: "Mountain Bike", price: 100, description: "This is a test gift", image: "Bike", link: "https://www.google.com", ranking: 1, isMostWanted: true)
+var newGift2 = Gift(name: "3-Body Problem", price: 35, description: "Book I would really like to read", image: "Test4", link: "https://www.amazon.com", ranking: 2, isGifted: true)
+var newGift3 = Gift(name: "Barbie Doll", price: 25, description: "Uglah Barbie", image: "Baby Doll", link: "https://www.google.com", ranking: 3)
+var newGift4 = Gift(name: "Test Gift3", price: 75, description: "This is yet another test gift", image: "Test3", link: "https://www.google.com")
+var newGift5 = Gift(name: "Test Gift4", price: 60, description: "Yup...another test gift", image: "Test2", link: "https://www.google.com")
+var newGift6 = Gift(name: "Test Gift5", price: 35, description: "This is a test gift", image: "Test3", link: "https://www.google.com")
+var testGiftList: [Gift] = [newGift, newGift2, newGift3]
+
+
 //UserAccounts
-var chris = UserAccount(firstName: "Chris", lastName: "Rogers", userName: "juice", spouse: "Brigette")
+var chris = UserAccount(firstName: "Chris", lastName: "Rogers", userName: "juice", spouse: "Brigette", giftsList: [newGift, newGift4])
 var brigette = UserAccount(firstName: "Brigette", lastName: "Rogers", userName: "brig", spouse: "Chris")
 var collin = UserAccount(firstName: "Collin", lastName: "Rogers", userName: "cdrog", spouse: "Megan")
 var meg = UserAccount(firstName: "Megan", lastName: "Rogers", userName: "megv", spouse: "Collin")
@@ -330,15 +346,7 @@ var mourningFamily: UserGroup = UserGroup(groupName: "Mourning Family", members:
 var x24: UserGroup = UserGroup(groupName: "X24", members: [chris, brigette, collin, meg, Aaron], groupAdmins: [chris, brigette], groupType: .family, currentYear: 2025, availableGiftees: [chris, brigette, collin, meg, Aaron])
 
 
-//Gifts
 
-var newGift = Gift(name: "Mountain Bike", price: 100, description: "This is a test gift", image: "Bike", link: "https://www.google.com", ranking: 1)
-var newGift2 = Gift(name: "3-Body Problem", price: 35, description: "Book I would really like to read", image: "Test4", link: "https://www.amazon.com", ranking: 2, isGifted: true)
-var newGift3 = Gift(name: "Barbie Doll", price: 25, description: "Uglah Barbie", image: "Baby Doll", link: "https://www.google.com", ranking: 3)
-var newGift4 = Gift(name: "Test Gift3", price: 75, description: "This is yet another test gift", image: "Test3", link: "https://www.google.com")
-var newGift5 = Gift(name: "Test Gift4", price: 60, description: "Yup...another test gift", image: "Test2", link: "https://www.google.com")
-var newGift6 = Gift(name: "Test Gift5", price: 35, description: "This is a test gift", image: "Test3", link: "https://www.google.com")
-var testGiftList: [Gift] = [newGift, newGift2, newGift3]
 
 var userGroupsArray = [mourningFamily, x24]
 

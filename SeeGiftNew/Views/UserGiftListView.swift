@@ -23,7 +23,7 @@ struct UserGiftListView: View {
     var body: some View {
         VStack{
             if (showDescPopup) {
-                GiftDescriptionZoomView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift)
+                GiftDetailView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift)
             }
             if (showList) {
                 NavigationView {
@@ -43,19 +43,12 @@ struct UserGiftListView: View {
                                         VStack (alignment: .trailing){
                                             Text(gift.name)
                                             Text(gift.price, format: .currency(code: "USD"))
-                                            //                                    Button(action: {
-                                            //                                        currGift = gift
-                                            //                                        showDescPopup.toggle()
-                                            //                                        showList.toggle() //List and description popup should always be opposites
-                                            //                                        print("Test?")
-                                            //                                    }, label: {
-                                            //                                        Text("Details")
-                                            //                                    }).buttonStyle(BorderlessButtonStyle())
                                         }
                                     }.padding()
-                                    Text("#\(gift.ranking)").padding()
+                                    if (gift.isMostWanted) {
+                                        Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
+                                    }
                                 }
-                                
                             }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
                         }.listRowBackground(Color.black)
                         //Color.black.ignoresSafeArea(.all)
@@ -64,75 +57,8 @@ struct UserGiftListView: View {
                         }.padding([.bottom])
                     }.padding()
                 }
-               
-                
-//                Button("PUSH") {
-//                    newList.append(testGift)
-//                }
-                
             }
         }//.background(Color.black).foregroundStyle(.white)
-        
-        
-        
-        
-        
-        //                ZStack{
-        //                    Color.yellow.opacity(0.25)
-        //                        .edgesIgnoringSafeArea(.all)
-        //                }
-        //                Section(header: Text("Viewing *INSERT USER HERE*'s Gift List")) {
-        //                    Text("Total Cost Of All User Gifts: $\(String(format: "%.2f", testUserAccount.totalGiftValue))")
-        //                        .font(.headline)
-        //                }
-        
-        //                ScrollView {
-        //                    Button(action: {
-        //
-        //                    }) {
-        //                        Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
-        //                    }
-        //                    //                if (showDescPopup) {
-        //                    //
-        //                    //                    //ADD A NEW VIEW HERE THAT WILL OVERRIDE THE ONE CURRENTLY SHOWN. WHAT I REALLY WANT IS A MODAL OF SOME KIND TO POPUP BUT MAYBE THAT WONT BE THE BEST
-        //                    //                    Button("Close") {
-        //                    //                        showDescPopup.toggle()
-        //                    //                    }
-        //                    //                    GiftDescriptionZoomView()
-        //                    //                }
-        //                    ForEach(testGiftList, id: \.self) {gift in
-        //
-        //                        HStack{
-        //                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
-        //                            Spacer()
-        //                            VStack (alignment: .trailing){
-        //                                Text(gift.name)
-        //                                Text(gift.price, format: .currency(code: "USD"))
-        //                                Button(action: {
-        //                                    currGift = gift
-        //                                    showDescPopup.toggle()
-        //                                    showList.toggle() //List and description popup should always be opposites
-        //                                    print("Test?")
-        //                                }, label: {
-        //                                    Text("Details")
-        //                                }).buttonStyle(BorderlessButtonStyle())
-        //                                //                            Button(action: {
-        //                                //                                showCommentsModal.toggle()
-        //                                //                                print("Test?")
-        //                                //                            }, label: {
-        //                                //                                Text("User Comments")
-        //                                //                            }).buttonStyle(BorderlessButtonStyle())
-        //
-        //                            }
-        //                        }.frame(maxWidth: .infinity, alignment: .topLeading).background(Color.yellow)
-        //
-        //                    }
-        //                    //                         Section(footer: Text("More Information")) {
-        //                    //                             Text("Contact us as (212) 555 3231")
-        //                    //                         }
-        //                }.cornerRadius(50).background(Color.yellow.ignoresSafeArea()).foregroundStyle(.black)
-        
-        
     }//.background(Color.black)
 }
 
