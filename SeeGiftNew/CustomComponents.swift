@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct CustomComponents: View {
+    @State var isOn : Bool = false
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
         Button("PUSH ME") {}.buttonStyle(CloseButton())
+        Toggle(isOn: $isOn, label: {
+            Text("Mark As Most Wanted")
+        }).toggleStyle(FavoritedToggleStyle())
         ScrollView (.horizontal, showsIndicators: false) {
         LazyHStack {
 //            ForEach(testGiftList) {gift in
@@ -99,6 +103,19 @@ struct CheckboxToggleStyle: ToggleStyle {
 
             
 
+        }
+    }
+}
+
+struct FavoritedToggleStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+            configuration.label
+            Image(systemName: configuration.isOn ? "star.fill" : "star").foregroundStyle(.yellow, .black).onTapGesture {
+                withAnimation(.spring()) {
+                    configuration.isOn.toggle()
+                }
+            }
         }
     }
 }

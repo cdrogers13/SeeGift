@@ -38,6 +38,9 @@ struct GiftDetailView: View {
                     Text("Gift Price: ")
                     Text(gift.price, format: .currency(code: "USD"))
                 }
+                Toggle(isOn: $gift.isMostWanted, label: {
+                    Text("Mark As Most Wanted")
+                }).toggleStyle(FavoritedToggleStyle())
             }
             VStack{
                 Text(gift.description)
