@@ -112,7 +112,7 @@ struct IsGiftedButton : View {
                                 Text(gift.name)
                                 Text(gift.price, format: .currency(code: "USD"))
                             }.padding()
-                        }
+                        }.padding()
                         if (gift.isMostWanted) {
                             Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
                         }
