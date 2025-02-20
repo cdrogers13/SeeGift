@@ -17,11 +17,12 @@ struct FriendGiftListView: View {
     @State var showList = true
     @State var showCommentsModal = false
     @State var currGift: Gift = Gift()
+    //@ObservableObject var currGift: Gift = Gift()
     
     var body: some View {
         VStack{
             if (showDescPopup) {
-                GiftDetailView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift)
+                FriendGiftDetailView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift)
             }
             if (showList) {
                 Section(header: Text("Viewing \(selectedFriend.firstName)'s Gift List")) {}
@@ -34,7 +35,7 @@ struct FriendGiftListView: View {
                     Text("Total Cost Of All User Gifts: $\(String(format: "%.2f", selectedFriend.totalGiftValue))")
                             .font(.headline)
                     ScrollView (showsIndicators: false) {
-                        ForEach(selectedFriend.giftsList, id: \.self) {gift in
+                        ForEach(selectedFriend.giftsList) {gift in
                             if(gift.isGifted) {
                                 IsGiftedButton(showDescPopup: $showDescPopup, showList: $showList, currGift: $currGift, gift: gift)
                             }

@@ -21,7 +21,7 @@ struct MainPage: View {
                     UserGiftListView().tabItem({
                         Label("Home", systemImage: "house")
                     })
-                    UserSettingsView().tabItem({
+                    FriendGiftListView().tabItem({
                         Label("Account", systemImage: "person.circle")
                     })
                     AdminGroupSettingsView().tabItem({

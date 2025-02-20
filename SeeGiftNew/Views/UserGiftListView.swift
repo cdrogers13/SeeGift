@@ -28,7 +28,7 @@ struct UserGiftListView: View {
             if (showList) {
                 NavigationView {
                     ScrollView (showsIndicators: false) {
-                        ForEach(newList, id: \.self) {gift in
+                        ForEach(newList) {gift in
                             Button(action: {
                                 currGift = gift
                                 showDescPopup.toggle()

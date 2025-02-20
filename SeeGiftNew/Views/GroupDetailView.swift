@@ -19,11 +19,12 @@ struct GroupDetailView: View {
             List {
                 ForEach(activeGroup.members) {member in
                     NavigationLink(destination: FriendGiftListView(selectedFriend: member)) {
-                        HStack{
+                        VStack{
                             VStack {
+                                Text(member.firstName)
                                 //Put users profile pic above their name
                                 Image(member.profilePicture).resizable().scaledToFit().padding()
-                                Text(member.firstName)
+                                
                             }
                             Text("View Gift List")
                         }

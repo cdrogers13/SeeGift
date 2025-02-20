@@ -14,8 +14,8 @@
             filePath = "SeeGiftNew/Code.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "generateRandomGiftee(user:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -64,6 +64,22 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "60"
             endingLineNumber = "60"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "77ADC322-BCCD-49BB-A011-0F57AA2334F0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SeeGiftNew/Views/FriendGiftListView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>

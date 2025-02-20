@@ -13,69 +13,69 @@ struct CustomComponents: View {
         Button("PUSH ME") {}.buttonStyle(CloseButton())
         ScrollView (.horizontal, showsIndicators: false) {
         LazyHStack {
-            ForEach(testGiftList, id: \.self) {gift in
-                
-                Button(action: {
-                }) {
-                    ZStack(alignment: .topTrailing) {
-                        HStack{
-                            //                                Text("#\(gift.ranking)")
-                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
-                            Spacer()
-                            VStack (alignment: .trailing){
-                                Text(gift.name)
-                                Text(gift.price, format: .currency(code: "USD"))
-                                //                                    Button(action: {
-                                //                                        currGift = gift
-                                //                                        showDescPopup.toggle()
-                                //                                        showList.toggle() //List and description popup should always be opposites
-                                //                                        print("Test?")
-                                //                                    }, label: {
-                                //                                        Text("Details")
-                                //                                    }).buttonStyle(BorderlessButtonStyle())
-                            }
-                        }.padding()
-                        Text("#\(gift.ranking)").padding()
-                    }
-                    
-                }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
-            }.listRowBackground(Color.black)
-            //LazyHStack {}
+//            ForEach(testGiftList) {gift in
+//                
+//                Button(action: {
+//                }) {
+//                    ZStack(alignment: .topTrailing) {
+//                        HStack{
+//                            //                                Text("#\(gift.ranking)")
+//                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+//                            Spacer()
+//                            VStack (alignment: .trailing){
+//                                Text(gift.name)
+//                                Text(gift.price, format: .currency(code: "USD"))
+//                                //                                    Button(action: {
+//                                //                                        currGift = gift
+//                                //                                        showDescPopup.toggle()
+//                                //                                        showList.toggle() //List and description popup should always be opposites
+//                                //                                        print("Test?")
+//                                //                                    }, label: {
+//                                //                                        Text("Details")
+//                                //                                    }).buttonStyle(BorderlessButtonStyle())
+//                            }
+//                        }.padding()
+//                        Text("#\(gift.ranking)").padding()
+//                    }
+//                    
+//                }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
+//            }.listRowBackground(Color.black)
+//            //LazyHStack {}
         }
     }
         
-        ScrollView (.horizontal) {
-        LazyHStack {
-            ForEach(testGiftList, id: \.self) {gift in
-                
-                Button(action: {
-                }) {
-                    ZStack(alignment: .topTrailing) {
-                        HStack{
-                            //                                Text("#\(gift.ranking)")
-                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
-                            Spacer()
-                            VStack (alignment: .trailing){
-                                Text(gift.name)
-                                Text(gift.price, format: .currency(code: "USD"))
-                                //                                    Button(action: {
-                                //                                        currGift = gift
-                                //                                        showDescPopup.toggle()
-                                //                                        showList.toggle() //List and description popup should always be opposites
-                                //                                        print("Test?")
-                                //                                    }, label: {
-                                //                                        Text("Details")
-                                //                                    }).buttonStyle(BorderlessButtonStyle())
-                            }
-                        }.padding()
-                        Text("#\(gift.ranking)").padding()
-                    }
-                    
-                }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
-            }.listRowBackground(Color.black)
-            //LazyHStack {}
-        }
-    }
+//        ScrollView (.horizontal) {
+//        LazyHStack {
+//            ForEach(testGiftList, id: \.self) {gift in
+//                
+//                Button(action: {
+//                }) {
+//                    ZStack(alignment: .topTrailing) {
+//                        HStack{
+//                            //                                Text("#\(gift.ranking)")
+//                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+//                            Spacer()
+//                            VStack (alignment: .trailing){
+//                                Text(gift.name)
+//                                Text(gift.price, format: .currency(code: "USD"))
+//                                //                                    Button(action: {
+//                                //                                        currGift = gift
+//                                //                                        showDescPopup.toggle()
+//                                //                                        showList.toggle() //List and description popup should always be opposites
+//                                //                                        print("Test?")
+//                                //                                    }, label: {
+//                                //                                        Text("Details")
+//                                //                                    }).buttonStyle(BorderlessButtonStyle())
+//                            }
+//                        }.padding()
+//                        Text("#\(gift.ranking)").padding()
+//                    }
+//                    
+//                }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
+//            }.listRowBackground(Color.black)
+//            //LazyHStack {}
+//        }
+//    }
         
     }
 }
@@ -83,7 +83,7 @@ struct CustomComponents: View {
 struct CheckboxToggleStyle: ToggleStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack {
-
+            configuration.label
             RoundedRectangle(cornerRadius: 5.0)
                 .stroke(lineWidth: 2)
                 .frame(width: 25, height: 25)
@@ -97,7 +97,7 @@ struct CheckboxToggleStyle: ToggleStyle {
                     }
                 }
 
-            configuration.label
+            
 
         }
     }

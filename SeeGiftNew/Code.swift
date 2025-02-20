@@ -90,25 +90,29 @@ class UserAccount: Identifiable {
 class AdminAccount: UserAccount {
     
 }
-struct Gift: Hashable {
+//struct Gift: Hashable {
+class Gift: Identifiable, ObservableObject {
     var name: String = "MISSING NAME"
     var price: Double = 0
     var description: String = ""
-    var userComments: String = ""
+    //var userComments: String = ""
     var image: String = ""
     var link: String = ""
-    var ranking: Int = 0
+    //var ranking: Int = 0
     var isGifted: Bool = false
     var giftID: Int = Int.random(in: 0...1000000000)
     var isMostWanted: Bool = false
     
-//    init(name: String = "MISSING NAME", price: Double = 0, description: String = "", link: String = "", ranking: Int = 0) {
-//        self.name = name
-//        self.price = price
-//        self.description = description
-//        self.link = link
-//        self.ranking = ranking
-//    }
+    init(name: String = "MISSING NAME", price: Double = 0, description: String = "", image: String = "", link: String = "", isGifted: Bool = false, giftID: Int = Int.random(in: 0...1000000000), isMostWanted: Bool = false) {
+        self.name = name
+        self.price = price
+        self.description = description
+        self.image = image
+        self.link = link
+        self.isGifted = isGifted
+        self.giftID = giftID
+        self.isMostWanted = isMostWanted
+    }
 }
 
 struct GiftPairings {
@@ -302,7 +306,7 @@ func adminCloneGroup(clonedGroup: UserGroup, newGroupName: String, newGroupYear:
 
 //Build out a gift object and then add it to the user account
 func userAddGift(user: UserAccount, giftName: String, giftPrice: Double, giftDescription: String = "", giftLink: String = "", giftRanking: Int = 0, giftIsGifted: Bool = false ) {
-    var newGift = Gift(name: giftName, price: giftPrice, description: giftDescription, link: giftLink, ranking: giftRanking, isGifted: giftIsGifted)
+    var newGift = Gift(name: giftName, price: giftPrice, description: giftDescription, link: giftLink, isGifted: giftIsGifted)
     user.addGiftToList(&newGift)
 }
 
@@ -319,9 +323,9 @@ func updateJSONFileOnNavigate() {
 
 //Gifts
 
-var newGift = Gift(name: "Mountain Bike", price: 100, description: "This is a test gift", image: "Bike", link: "https://www.google.com", ranking: 1, isMostWanted: true)
-var newGift2 = Gift(name: "3-Body Problem", price: 35, description: "Book I would really like to read", image: "Test4", link: "https://www.amazon.com", ranking: 2, isGifted: true)
-var newGift3 = Gift(name: "Barbie Doll", price: 25, description: "Uglah Barbie", image: "Baby Doll", link: "https://www.google.com", ranking: 3)
+var newGift = Gift(name: "Mountain Bike", price: 100, description: "This is a test gift", image: "Bike", link: "https://www.google.com", isMostWanted: true)
+var newGift2 = Gift(name: "3-Body Problem", price: 35, description: "Book I would really like to read", image: "Test4", link: "https://www.amazon.com", isGifted: true)
+var newGift3 = Gift(name: "Barbie Doll", price: 25, description: "Uglah Barbie", image: "Baby Doll", link: "https://www.google.com")
 var newGift4 = Gift(name: "Test Gift3", price: 75, description: "This is yet another test gift", image: "Test3", link: "https://www.google.com")
 var newGift5 = Gift(name: "Test Gift4", price: 60, description: "Yup...another test gift", image: "Test2", link: "https://www.google.com")
 var newGift6 = Gift(name: "Test Gift5", price: 35, description: "This is a test gift", image: "Test3", link: "https://www.google.com")

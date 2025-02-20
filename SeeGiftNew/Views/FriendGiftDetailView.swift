@@ -8,10 +8,11 @@
 import SwiftUI
 
 
-struct GiftDetailView: View {
+struct FriendGiftDetailView: View {
     @Binding var showList: Bool
     @Binding var showDescPopup: Bool
     @Binding var gift: Gift
+    //@State var isGifted: Bool = false
     
     let testGift = testGiftList[1]
     var body: some View {
@@ -38,8 +39,12 @@ struct GiftDetailView: View {
                     Text("Gift Price: ")
                     Text(gift.price, format: .currency(code: "USD"))
                 }
+                Toggle(isOn: $gift.isGifted, label: {
+                    Text("Mark As Purchased?")
+                }).toggleStyle(CheckboxToggleStyle())
             }
             VStack{
+                //Text("Gift Description")
                 Text(gift.description)
             }.padding(.top)
             
@@ -50,5 +55,5 @@ struct GiftDetailView: View {
 }
 
 #Preview {
-    GiftDetailView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[0]))
+    FriendGiftDetailView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[0]))
 }
