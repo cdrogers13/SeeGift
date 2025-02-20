@@ -10,12 +10,10 @@ import SwiftUI
 
 
 struct UserGiftListView: View {
-    let testGift = Gift(name: "Test", price: 100.00, description: "This is a test gift", image: "Test")
-    let testUserAccount = UserAccount(giftsList: testGiftList)
-    var totalPrice: Double = 0
+    //let testGift = Gift(name: "Test", price: 100.00, description: "This is a test gift", image: "Test")
+    //let testUserAccount = UserAccount(giftsList: testGiftList)
     @State var showDescPopup = false
     @State var showList = true
-    @State var showCommentsModal = false
     @State var currGift: Gift = Gift()
     @State var newList = testGiftList
     @State var createdUser: UserAccount = UserAccount()

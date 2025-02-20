@@ -91,7 +91,7 @@ class AdminAccount: UserAccount {
     
 }
 //struct Gift: Hashable {
-class Gift: Identifiable, ObservableObject {
+@Observable class Gift: Identifiable {
     var name: String = "MISSING NAME"
     var price: Double = 0
     var description: String = ""

@@ -10,14 +10,13 @@ import SwiftUI
 
 
 struct FriendGiftListView: View {
-    let testGift = Gift(name: "Test", price: 100.00, description: "This is a test gift", image: "Test")
-    @State var selectedFriend = UserAccount(giftsList: testGiftList)
+    //let testGift = Gift(name: "Test", price: 100.00, description: "This is a test gift", image: "Test")
+    var selectedFriend = UserAccount(giftsList: testGiftList)
     var totalPrice: Double = 0
     @State var showDescPopup = false
     @State var showList = true
     @State var showCommentsModal = false
     @State var currGift: Gift = Gift()
-    //@ObservableObject var currGift: Gift = Gift()
     
     var body: some View {
         VStack{
