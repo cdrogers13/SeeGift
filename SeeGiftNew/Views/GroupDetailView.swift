@@ -14,7 +14,7 @@ struct GroupDetailView: View {
         //If viewing user is an admin of the group then put the setting cog in the top right
         
         //Header Text of some sort with the group name here
-        Text("\(activeGroup.groupName)").font(.title).fontDesign(.serif)
+        Text("\(activeGroup.groupName) GiftHive").font(.title).fontDesign(.serif)
         NavigationView {
             List {
                 ForEach(activeGroup.members) {member in

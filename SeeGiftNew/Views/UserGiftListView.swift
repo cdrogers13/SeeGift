@@ -10,20 +10,17 @@ import SwiftUI
 
 
 struct UserGiftListView: View {
-    //let testGift = Gift(name: "Test", price: 100.00, description: "This is a test gift", image: "Test")
-    //let testUserAccount = UserAccount(giftsList: testGiftList)
     @State var showDescPopup = false
     @State var showList = true
     @State var currGift: Gift = Gift()
     @State var newList = testGiftList
     @State var createdUser: UserAccount = UserAccount()
-    
+    @State var currFavGiftIndex: Int = 0
     var body: some View {
         VStack{
+            
             if (showDescPopup) {
-                //This allows me to only let one gift be marked as most desired
-                let initialFavGiftIndex: Int = newList.firstIndex(where: { $0.isMostWanted }) ?? 0
-                GiftDetailView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift, giftList: $newList, initialFavGiftIndex: initialFavGiftIndex)
+                GiftDetailView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift, giftList: $newList, currFavGiftIndex: $currFavGiftIndex)
             }
             if (showList) {
                 NavigationView {
@@ -31,13 +28,12 @@ struct UserGiftListView: View {
                         ForEach(newList) {gift in
                             Button(action: {
                                 currGift = gift
+                                currFavGiftIndex = newList.firstIndex(where: { $0.isMostWanted }) ?? 0
                                 showDescPopup.toggle()
                                 showList.toggle() //List and description popup should always be opposites
-                                //print("Test?")
                             }) {
                                 ZStack(alignment: .topTrailing) {
                                     HStack{
-                                        //                                Text("#\(gift.ranking)")
                                         Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
                                         Spacer()
                                         VStack (alignment: .trailing){

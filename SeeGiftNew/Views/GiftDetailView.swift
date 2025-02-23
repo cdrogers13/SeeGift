@@ -13,16 +13,14 @@ struct GiftDetailView: View {
     @Binding var showDescPopup: Bool
     @Binding var gift: Gift
     @Binding var giftList: [Gift]
-    let initialFavGiftIndex: Int
+    @Binding var currFavGiftIndex: Int
     var body: some View {
         
         
         VStack{
             Button("Close") {
-                print(initialFavGiftIndex, gift !== giftList[initialFavGiftIndex])
-                if (gift.isMostWanted && gift !== giftList[initialFavGiftIndex]) {
-                    giftList[initialFavGiftIndex].isMostWanted = false
-                    //print(initialFavGiftIndex)
+                if (gift.isMostWanted && gift !== giftList[currFavGiftIndex]) {
+                    giftList[currFavGiftIndex].isMostWanted = false
                 }
                 showList.toggle() //List and description popup should always be opposites
                 showDescPopup.toggle()
@@ -62,5 +60,5 @@ struct GiftDetailView: View {
 }
 
 #Preview {
-    GiftDetailView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[1]), giftList: .constant(testGiftList), initialFavGiftIndex: 0)
+    GiftDetailView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[1]), giftList: .constant(testGiftList), currFavGiftIndex: .constant(0))
 }

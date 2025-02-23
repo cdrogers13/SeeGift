@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct UserGroupsListView: View {
-    //@State var userGroups: [UserGroup]
     var body: some View {
         NavigationView {
             ScrollView (showsIndicators: false) {

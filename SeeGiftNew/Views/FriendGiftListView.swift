@@ -10,7 +10,6 @@ import SwiftUI
 
 
 struct FriendGiftListView: View {
-    //let testGift = Gift(name: "Test", price: 100.00, description: "This is a test gift", image: "Test")
     var selectedFriend = UserAccount(giftsList: testGiftList)
     var totalPrice: Double = 0
     @State var showDescPopup = false
@@ -62,13 +61,11 @@ struct StandardGiftButton : View {
             currGift = gift
             showDescPopup.toggle()
             showList.toggle() //List and description popup should always be opposites
-            //print("Test?")
-        }) {
+         }) {
             VStack {
                 
                 ZStack(alignment: .topTrailing) {
                     HStack{
-                        //                                Text("#\(gift.ranking)")
                         Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
                         Spacer()
                         VStack (alignment: .trailing){
@@ -80,8 +77,6 @@ struct StandardGiftButton : View {
                     if (gift.isMostWanted) {
                         Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
                     }
-                   
-                    //Text("#\(gift.ranking)").padding()
                 }
             }
         }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
@@ -100,7 +95,6 @@ struct IsGiftedButton : View {
                 currGift = gift
                 showDescPopup.toggle()
                 showList.toggle()
-                //print("Test?")
             }) {
                 VStack (alignment: .center) {
                     Label("GIFTED!", systemImage: "gift.circle.fill").labelStyle(FlippedLabelStyle(textColor: .black, picColor: .green))
@@ -116,7 +110,6 @@ struct IsGiftedButton : View {
                         if (gift.isMostWanted) {
                             Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
                         }
-                        //Text("#\(gift.ranking)").padding()
                     }
                 }
             }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
