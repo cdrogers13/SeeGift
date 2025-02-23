@@ -16,7 +16,6 @@ struct GiftDetailView: View {
     @Binding var currFavGiftIndex: Int
     var body: some View {
         
-        
         VStack{
             Button("Close") {
                 if (gift.isMostWanted && gift !== giftList[currFavGiftIndex]) {

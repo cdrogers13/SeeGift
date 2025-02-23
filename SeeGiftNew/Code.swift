@@ -24,6 +24,8 @@
 
 
 import Foundation
+import WebKit
+
 
 class UserAccount: Identifiable {
     var firstName: String = "Test"
