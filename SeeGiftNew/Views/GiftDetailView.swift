@@ -12,15 +12,29 @@ struct GiftDetailView: View {
     @Binding var showList: Bool
     @Binding var showDescPopup: Bool
     @Binding var gift: Gift
-    
-    let testGift = testGiftList[1]
+    @Binding var giftList: [Gift]
+    let initialFavGiftIndex: Int
     var body: some View {
+        
+        
         VStack{
-            Text(gift.name).font(.largeTitle)
             Button("Close") {
+                print(initialFavGiftIndex, gift !== giftList[initialFavGiftIndex])
+                if (gift.isMostWanted && gift !== giftList[initialFavGiftIndex]) {
+                    giftList[initialFavGiftIndex].isMostWanted = false
+                    //print(initialFavGiftIndex)
+                }
                 showList.toggle() //List and description popup should always be opposites
                 showDescPopup.toggle()
-            }.buttonStyle(CloseButton()).padding([.bottom], 8)
+                
+            }.buttonStyle(CloseButton())//.padding([.bottom], 8)
+            HStack {
+                Text(gift.name).font(.largeTitle)
+                if (gift.isMostWanted) {
+                    Image(systemName: "star.fill").resizable().frame(width: 25, height: 25)
+//                    Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
+                }
+            }
             ZStack(alignment: .top) {
                 Image(gift.image).resizable().scaledToFit().cornerRadius(120)
                 
@@ -31,8 +45,6 @@ struct GiftDetailView: View {
                         Text("Purchasing Link: ")
                         Link(gift.link, destination: url)
                     }
-                    //Text(gift.link)
-                    
                 }
                 HStack{
                     Text("Gift Price: ")
@@ -45,13 +57,10 @@ struct GiftDetailView: View {
             VStack{
                 Text(gift.description)
             }.padding(.top)
-            
-            //Text(gift.userComments)
-            
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 #Preview {
-    GiftDetailView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[0]))
+    GiftDetailView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[1]), giftList: .constant(testGiftList), initialFavGiftIndex: 0)
 }

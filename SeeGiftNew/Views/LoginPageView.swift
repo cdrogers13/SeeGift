@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoginPage: View {
+struct LoginPageView: View {
     @State var username: String = ""
     @State var password: String = ""
     
@@ -41,5 +41,5 @@ struct LoginPage: View {
 }
 
 #Preview {
-    LoginPage()
+    LoginPageView()
 }

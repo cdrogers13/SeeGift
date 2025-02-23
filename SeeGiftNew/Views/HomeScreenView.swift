@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainPage: View {
+struct HomeScreenView: View {
     @State private var value = 1
     var body: some View {
         VStack{
@@ -76,5 +76,5 @@ struct MainPage: View {
 }
 
 #Preview {
-    MainPage()
+    HomeScreenView()
 }

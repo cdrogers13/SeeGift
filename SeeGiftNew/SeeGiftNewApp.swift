@@ -17,7 +17,7 @@ struct SeeGiftNewApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            MainPage()
+            HomeScreenView()
             //LoginPage().accentColor(.yellow).preferredColorScheme(.dark)
         }
     }

@@ -21,7 +21,9 @@ struct UserGiftListView: View {
     var body: some View {
         VStack{
             if (showDescPopup) {
-                GiftDetailView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift)
+                //This allows me to only let one gift be marked as most desired
+                let initialFavGiftIndex: Int = newList.firstIndex(where: { $0.isMostWanted }) ?? 0
+                GiftDetailView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift, giftList: $newList, initialFavGiftIndex: initialFavGiftIndex)
             }
             if (showList) {
                 NavigationView {
@@ -31,7 +33,7 @@ struct UserGiftListView: View {
                                 currGift = gift
                                 showDescPopup.toggle()
                                 showList.toggle() //List and description popup should always be opposites
-                                print("Test?")
+                                //print("Test?")
                             }) {
                                 ZStack(alignment: .topTrailing) {
                                     HStack{

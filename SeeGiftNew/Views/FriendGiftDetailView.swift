@@ -17,11 +17,18 @@ struct FriendGiftDetailView: View {
     let testGift = testGiftList[1]
     var body: some View {
         VStack{
-            Text(gift.name).font(.largeTitle)
             Button("Close") {
                 showList.toggle() //List and description popup should always be opposites
                 showDescPopup.toggle()
-            }.buttonStyle(CloseButton()).padding([.bottom], 8)
+            }.buttonStyle(CloseButton())//.padding([.bottom], 8)
+            HStack {
+                Text(gift.name).font(.largeTitle)
+                if (gift.isMostWanted) {
+                    Image(systemName: "star.fill").resizable().frame(width: 25, height: 25)
+//                    Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
+                }
+            }
+            
             ZStack(alignment: .top) {
                 Image(gift.image).resizable().scaledToFit().cornerRadius(120)
                 
@@ -32,8 +39,6 @@ struct FriendGiftDetailView: View {
                         Text("Purchasing Link: ")
                         Link(gift.link, destination: url)
                     }
-                    //Text(gift.link)
-                    
                 }
                 HStack{
                     Text("Gift Price: ")
@@ -44,12 +49,8 @@ struct FriendGiftDetailView: View {
                 }).toggleStyle(CheckboxToggleStyle())
             }
             VStack{
-                //Text("Gift Description")
                 Text(gift.description)
             }.padding(.top)
-            
-            //Text(gift.userComments)
-            
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

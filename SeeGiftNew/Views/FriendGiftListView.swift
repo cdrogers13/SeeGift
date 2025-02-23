@@ -62,7 +62,7 @@ struct StandardGiftButton : View {
             currGift = gift
             showDescPopup.toggle()
             showList.toggle() //List and description popup should always be opposites
-            print("Test?")
+            //print("Test?")
         }) {
             VStack {
                 
@@ -100,7 +100,7 @@ struct IsGiftedButton : View {
                 currGift = gift
                 showDescPopup.toggle()
                 showList.toggle()
-                print("Test?")
+                //print("Test?")
             }) {
                 VStack (alignment: .center) {
                     Label("GIFTED!", systemImage: "gift.circle.fill").labelStyle(FlippedLabelStyle(textColor: .black, picColor: .green))
