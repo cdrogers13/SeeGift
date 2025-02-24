@@ -100,9 +100,6 @@ struct CheckboxToggleStyle: ToggleStyle {
                         configuration.isOn.toggle()
                     }
                 }
-
-            
-
         }
     }
 }

@@ -11,7 +11,8 @@ import SwiftSoup
 
 struct AddGiftViaLinkView: View {
     let mozaLink = "https://mozaracing.com/en-us/product/r3-bundle-for-pc/"
-    @State var giftLink: String = ""
+    @State var downloadedGift: Gift = Gift()
+    @State var giftLink: String = "https://amazon.com"
     @State var showLoadedGift: Bool = false
     @State var viewID = UUID() //UUID is something you can pass into a view so that the UI knows its a new instance and will refresh itself
     var body: some View {
@@ -24,63 +25,82 @@ struct AddGiftViaLinkView: View {
                 showLoadedGift = (giftLink.isEmpty) ? false : true
             }
             if (showLoadedGift) {
-                LoadedGiftLinkView(giftLink: giftLink).id(viewID)
+                LoadedGiftLinkView(gift: $downloadedGift, giftLink: giftLink).id(viewID)
             }
         }
     }
 }
 
 struct LoadedGiftLinkView: View {
+    @Binding var gift: Gift
     @State private var pageTitle: String = "Loading..."
     @State private var metaDescription: String = "Loading..."
     @State private var links: [String] = []
-    @State private var images: [String] = []
+    @State private var images: [downloadedGiftImage] = []
+    @State var currImage: downloadedGiftImage = downloadedGiftImage()
     let giftLink: String
     
     var body: some View {
         Text("Verify Gift Information Before Saving")
-            ScrollView {
-                       VStack(alignment: .leading, spacing: 10) {
-                           Text("Page Title: \(pageTitle)").font(.headline)
-                           Text("Meta Description: \(metaDescription)").font(.subheadline)
-                           
-    //                       Text("🔗 Links:")
-    //                       ForEach(links, id: \.self) { link in
-    //                           Text(link).foregroundColor(.blue)
-    //                       }
-
-                           Text("🖼 Images:")
-                                           ForEach(images, id: \.self) { img in
-                                               if let url = URL(string: img) {
-                                                   if (img.hasSuffix("jpg") || img.contains("fmt=jpeg") ) {
-                                                       AsyncImage(url: url) { phase in
-                                                           if let image = phase.image {
-                                                               image.resizable().scaledToFit()//.frame(height: 150)
-                                                           } else {
-                                                               ProgressView()
-                                                           }
-                                                       }
-                                                       .frame(width: 200, height: 150)
-                                                       .background(Color.gray.opacity(0.2))
-                                                       .cornerRadius(10)
-                                                   }
-                                                  
-                                               }
-                                           }
-                                       }
-                                       .padding()
-                   }
+        
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Page Title: \(pageTitle)").font(.headline)
+            Text("Meta Description: \(metaDescription)").font(.subheadline)
+            
+            //                       Text("🔗 Links:")
+            //                       ForEach(links, id: \.self) { link in
+            //                           Text(link).foregroundColor(.blue)
+            //                       }
+            ScrollView (.horizontal){
+                Text("🖼 Images:")
+                LazyHStack {
+                    ForEach($images, id: \.self) { $img in
+                        if let url = URL(string: img.url) {
+                            if (img.url.hasSuffix("jpg") || img.url.contains("fmt=jpeg") ) {
+                                ZStack(alignment: .topTrailing) {
+                                    AsyncImage(url: url) { phase in
+                                        if let image = phase.image {
+                                            image.resizable().scaledToFit()//.frame(height: 150)
+                                        } else {
+                                            ProgressView()
+                                        }
+                                    }
+                                    .frame(width: 200, height: 150)
+                                    .background(Color.gray.opacity(0.2))
+                                    .cornerRadius(10)
+                                    checkBoxItemView(isSelected: $img.isSelected)
+                                }
+                               
+                            }
+                            
+                        }
+                    }
+                }
+                
+            }
+            .padding()
+            
+            Button("TEMP BUTTON TO SAVE") {
+                //filters the images array to only the ones that are selected and then maps it to be just the actual string names.
+                //TODO: FROM HERE I WILL NEED TO ACTUALLY DOWNLOAD THOSE FILES AND THEN STORE THEM IN THE DOCUMENTS FOLDER OF THE APP, BUT FOR NOW THIS WILL SUFFICE
+                gift.downloadedImages = images.filter() {
+                    $0.isSelected == true
+                }.map({$0.url})
+                
+            }
+        }
             .onAppear {
                 fetchHTML(from: giftLink) { title, meta, extractedLinks, extractedImages in
                     self.pageTitle = title ?? "Failed to load"
                     self.metaDescription = meta ?? "No Meta Description"
                     self.links = extractedLinks
                     self.images = extractedImages
+                    //self.gift = Gift(downloadedImages: extractedImages)
                 }
             }
         }
         
-        func fetchHTML(from urlString: String, completion: @escaping (String?, String?, [String], [String]) -> Void) {
+    func fetchHTML(from urlString: String, completion: @escaping (String?, String?, [String], [downloadedGiftImage]) -> Void) {
                 guard let url = URL(string: urlString) else {
                     completion(nil, nil, [], [])
                     return
@@ -113,8 +133,9 @@ struct LoadedGiftLinkView: View {
     //
     //
     //                    }
-                        let boom = extractedImages.map { imageURL in
-                            imageURL.hasPrefix("https") ? imageURL : "https:" + imageURL
+                        let boom = extractedImages.map() { imageURL in
+                            let fixedURL = imageURL.hasPrefix("https") ? imageURL : "https:" + imageURL
+                           return downloadedGiftImage(url: fixedURL, isSelected: false)
                         }
                         //print(extractedImages)
                         DispatchQueue.main.async {
@@ -125,6 +146,18 @@ struct LoadedGiftLinkView: View {
                     }
                 }.resume()
             }
+}
+
+struct downloadedGiftImage: Hashable {
+    var url: String = ""
+    var isSelected: Bool = false
+}
+
+struct checkBoxItemView: View {
+    @Binding var isSelected: Bool
+    var body: some View {
+        Toggle(isOn: $isSelected, label: {}).toggleStyle(CheckboxToggleStyle())
+    }
 }
 
 #Preview {

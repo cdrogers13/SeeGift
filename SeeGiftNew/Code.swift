@@ -106,8 +106,9 @@ class AdminAccount: UserAccount {
     var isGifted: Bool = false
     var giftID: Int = Int.random(in: 0...1000000000)
     var isMostWanted: Bool = false
+    var downloadedImages: [String] = []
     
-    init(name: String = "MISSING NAME", price: Double = 0, description: String = "", image: String = "", link: String = "", isGifted: Bool = false, giftID: Int = Int.random(in: 0...1000000000), isMostWanted: Bool = false) {
+    init(name: String = "MISSING NAME", price: Double = 0, description: String = "", image: String = "", link: String = "", isGifted: Bool = false, giftID: Int = Int.random(in: 0...1000000000), isMostWanted: Bool = false, downloadedImages: [String] = []) {
         self.name = name
         self.price = price
         self.description = description
@@ -116,6 +117,7 @@ class AdminAccount: UserAccount {
         self.isGifted = isGifted
         self.giftID = giftID
         self.isMostWanted = isMostWanted
+        self.downloadedImages = downloadedImages
     }
 }
 

@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftSoup
 
 struct TestingView: View {
+    @State var viewModel: Bool = false
     @State private var pageTitle: String = "Loading..."
        @State private var metaDescription: String = "Loading..."
        @State private var links: [String] = []
@@ -18,6 +19,18 @@ struct TestingView: View {
     let amazonLink = "https://www.amazon.com/Cl%C3%A9-Peau-Beaut%C3%A9-Clarifying-Cleansing/dp/B0977YGCS4?ie=UTF8&ASIN=B0977YGCS4&sr=1-2&qid=1740337287&_encoding=UTF8&content-id=amzn1.sym.74b5cdc5-f065-4d74-a6b6-32a79a8204a6&pd_rd_w=Uzuh4&dib=eyJ2IjoiMSJ9.Eq45uRRU0g7LymhSKKr5oZ0fbWozohw_rq5ZwZW0i11fbhPeMxSOOA0LbwZ5aMr6Ak1uXq_MVh7ZFcRcpkexemaZkD8_PPhJdJz8yXXw5QgkqKEy5IB5qNma-PH-WWiv56w4MAJ0Vw5tD8L3L182NvX88tEixhmorJgcHgl0TK41rpwWMBCZM9SM_jn6rbS1dO-9xoxzJ3LfQdcXddCXtT9WuH0w8U6I6mfE7ulCsOIyVkxS--ETcHtqD30CMJVZqXYJvLZbmVa5w69e5M3VJp8oLCEdTi5uVAvZ2ypF2dM.OoGF97BlqfBmFmbEkaU1rHqj2SeKji-GrMvn2eRro80&rnid=20657941011&dib_tag=se&pd_rd_wg=VMZrT&pd_rd_r=b0eae4d0-33e9-42bc-92a9-75039335ee99&ref_=lx_bd"
     
     var body: some View {
+       
+            
+            ZStack {
+                    Color.blue
+                    if viewModel {
+                        Color.green
+                    }
+                }
+                .onTapGesture {
+                    viewModel.toggle()
+                }
+            
         ScrollView {
                    VStack(alignment: .leading, spacing: 10) {
                        Text("Page Title: \(pageTitle)").font(.headline)
