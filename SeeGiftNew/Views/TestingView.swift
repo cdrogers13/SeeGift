@@ -14,62 +14,115 @@ struct TestingView: View {
        @State private var metaDescription: String = "Loading..."
        @State private var links: [String] = []
        @State private var images: [String] = []
+    @State private var productTitle: String = "Enter a link"
+        @State private var productImage: String = ""
+        @State private var inputURL: String = ""
+    @State var productPrice: String = "0.00"
     let aeLink = "https://www.ae.com/us/en/p/men/slim-fit-jeans/slim-straight-jeans-/ae-airflex-slim-straight-jean/0116_6848_001?menu=cat4840004"
     let mozaLink = "https://mozaracing.com/en-us/product/r3-bundle-for-pc/"
-    let amazonLink = "https://www.amazon.com/Cl%C3%A9-Peau-Beaut%C3%A9-Clarifying-Cleansing/dp/B0977YGCS4?ie=UTF8&ASIN=B0977YGCS4&sr=1-2&qid=1740337287&_encoding=UTF8&content-id=amzn1.sym.74b5cdc5-f065-4d74-a6b6-32a79a8204a6&pd_rd_w=Uzuh4&dib=eyJ2IjoiMSJ9.Eq45uRRU0g7LymhSKKr5oZ0fbWozohw_rq5ZwZW0i11fbhPeMxSOOA0LbwZ5aMr6Ak1uXq_MVh7ZFcRcpkexemaZkD8_PPhJdJz8yXXw5QgkqKEy5IB5qNma-PH-WWiv56w4MAJ0Vw5tD8L3L182NvX88tEixhmorJgcHgl0TK41rpwWMBCZM9SM_jn6rbS1dO-9xoxzJ3LfQdcXddCXtT9WuH0w8U6I6mfE7ulCsOIyVkxS--ETcHtqD30CMJVZqXYJvLZbmVa5w69e5M3VJp8oLCEdTi5uVAvZ2ypF2dM.OoGF97BlqfBmFmbEkaU1rHqj2SeKji-GrMvn2eRro80&rnid=20657941011&dib_tag=se&pd_rd_wg=VMZrT&pd_rd_r=b0eae4d0-33e9-42bc-92a9-75039335ee99&ref_=lx_bd"
+    let amazonLink = "https://www.amazon.com/Mintes-Dental-Vet-Recommended-Mint-Flavored-Removes/dp/B083MN4LGT?pd_rd_w=7wEGJ&content-id=amzn1.sym.4cbfbf26-01ab-40e5-a9b2-609425eaa81a&pf_rd_p=4cbfbf26-01ab-40e5-a9b2-609425eaa81a&pf_rd_r=HDEX70TQAXQM007XGJVY&pd_rd_wg=KW1DL&pd_rd_r=53b8994e-ada2-4cf4-9e8e-34e22d70a10c&pd_rd_i=B083MN4LGT&ref_=pd_bap_d_grid_rp_0_1_ec_scp_i&th=1"
     
     var body: some View {
        
             
-            ZStack {
-                    Color.blue
-                    if viewModel {
-                        Color.green
-                    }
-                }
-                .onTapGesture {
-                    viewModel.toggle()
-                }
+//            ZStack {
+//                    Color.blue
+//                    if viewModel {
+//                        Color.green
+//                    }
+//                }
+//                .onTapGesture {
+//                    viewModel.toggle()
+//                }
             
         ScrollView {
-                   VStack(alignment: .leading, spacing: 10) {
-                       Text("Page Title: \(pageTitle)").font(.headline)
-                       Text("Meta Description: \(metaDescription)").font(.subheadline)
-                       
-//                       Text("🔗 Links:")
-//                       ForEach(links, id: \.self) { link in
-//                           Text(link).foregroundColor(.blue)
-//                       }
+            Text(productTitle)
+            Image(productImage).resizable().scaledToFit()
+            Text(productPrice)
+            Button("TEMP BUTTON TO SAVE") {
+                let apiKey = "6cf4a9e9ef926ba70f97b913724ee09b"
+                let targetURL = aeLink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                    let scraperURL = "https://api.scraperapi.com/?api_key=\(apiKey)&url=\(targetURL)"
 
-                       Text("🖼 Images:")
-                                       ForEach(images, id: \.self) { img in
-                                           if let url = URL(string: img) {
-                                               if (img.hasSuffix("jpg") || img.contains("fmt=jpeg") ) {
-                                                   AsyncImage(url: url) { phase in
-                                                       if let image = phase.image {
-                                                           image.resizable().scaledToFit()//.frame(height: 150)
-                                                       } else {
-                                                           ProgressView()
-                                                       }
-                                                   }
-                                                   .frame(width: 200, height: 150)
-                                                   .background(Color.gray.opacity(0.2))
-                                                   .cornerRadius(10)
-                                               }
-                                              
-                                           }
-                                       }
-                                   }
-                                   .padding()
+                    guard let url = URL(string: scraperURL) else { return }
+
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        guard let data = data, error == nil, let html = String(data: data, encoding: .utf8) else { return }
+
+                        do {
+                            let doc = try SwiftSoup.parse(html)
+                            let title = try doc.select("title").text()
+                            let price = extractPrice(from: doc)
+                            let image = try doc.select("meta[property=og:image]").attr("content")
+
+                            DispatchQueue.main.async {
+                                self.productTitle = title
+                                self.productImage = image
+                                self.productPrice = price
+                            }
+                        } catch {
+                            print("Parsing error: \(error)")
+                        }
+                    }.resume()
+                    
+                
+            }
+//                   VStack(alignment: .leading, spacing: 10) {
+//                       Text("Page Title: \(pageTitle)").font(.headline)
+//                       Text("Meta Description: \(metaDescription)").font(.subheadline)
+//                       
+////                       Text("🔗 Links:")
+////                       ForEach(links, id: \.self) { link in
+////                           Text(link).foregroundColor(.blue)
+////                       }
+//
+//                       Text("🖼 Images:")
+//                                       ForEach(images, id: \.self) { img in
+//                                           if let url = URL(string: img) {
+//                                               if (img.hasSuffix("jpg") || img.contains("fmt=jpeg") ) {
+//                                                   AsyncImage(url: url) { phase in
+//                                                       if let image = phase.image {
+//                                                           image.resizable().scaledToFit()//.frame(height: 150)
+//                                                       } else {
+//                                                           ProgressView()
+//                                                       }
+//                                                   }
+//                                                   .frame(width: 200, height: 150)
+//                                                   .background(Color.gray.opacity(0.2))
+//                                                   .cornerRadius(10)
+//                                               }
+//                                              
+//                                           }
+//                                       }
+//                                   }
+//                                   .padding()
                }
         .onAppear {
-            fetchHTML(from: aeLink) { title, meta, extractedLinks, extractedImages in
-                self.pageTitle = title ?? "Failed to load"
-                self.metaDescription = meta ?? "No Meta Description"
-                self.links = extractedLinks
-                self.images = extractedImages
+//            fetchHTML(from: aeLink) { title, meta, extractedLinks, extractedImages in
+//                self.pageTitle = title ?? "Failed to load"
+//                self.metaDescription = meta ?? "No Meta Description"
+//                self.links = extractedLinks
+//                self.images = extractedImages
+//            }
+        }
+    }
+    
+    func extractPrice(from doc: Document) -> String {
+        let selectors = [
+            ".a-price-whole",                // Amazon
+            ".priceView-hero-price",         // Best Buy
+            ".product-price",                // Walmart
+            ".Price-characteristic",         // Target
+            ".price",                        // General fallback
+        ]
+        
+        for selector in selectors {
+            if let price = try? doc.select(selector).first()?.text(), !price.isEmpty {
+                return price
             }
         }
+        
+        return "Price Not Found"
     }
     
     func fetchHTML(from urlString: String, completion: @escaping (String?, String?, [String], [String]) -> Void) {

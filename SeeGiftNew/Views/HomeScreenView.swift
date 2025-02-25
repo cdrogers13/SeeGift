@@ -16,19 +16,23 @@ struct HomeScreenView: View {
                 Image(systemName: "gift").foregroundStyle(.yellow)
                      }) {}.font(.largeTitle)
             //Text("HOME PAGE")
-            TabView{
-                Group {
-                    UserGiftListView().tabItem({
-                        Label("Home", systemImage: "house")
-                    })
-                    FriendGiftListView().tabItem({
-                        Label("Account", systemImage: "person.circle")
-                    })
-                    AdminGroupSettingsView().tabItem({
-                        Label("Groups", systemImage: "person.3.fill")
-                    })
-                }.toolbarBackground(.visible, for: .tabBar).toolbarBackground(.black, for: .tabBar)
-            }
+//            TabView{
+//                Group {
+//                    UserGiftListView().tabItem({
+//                        Label("Home", systemImage: "house")
+//                    })
+//                    FriendGiftListView().tabItem({
+//                        Label("Account", systemImage: "person.circle")
+//                    })
+//                    AdminGroupSettingsView().tabItem({
+//                        Label("Groups", systemImage: "person.3.fill")
+//                    })
+//                }.toolbarBackground(.visible, for: .tabBar).toolbarBackground(.black, for: .tabBar)
+//            }
+            
+            
+            
+            AddGiftViaLinkView()
     //                NavigationView {
     //
     //                ZStack {
