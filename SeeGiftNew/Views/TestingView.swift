@@ -41,7 +41,7 @@ struct TestingView: View {
             Text(productPrice)
             Button("TEMP BUTTON TO SAVE") {
                 let apiKey = "6cf4a9e9ef926ba70f97b913724ee09b"
-                let targetURL = aeLink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                let targetURL = mozaLink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                     let scraperURL = "https://api.scraperapi.com/?api_key=\(apiKey)&url=\(targetURL)"
 
                     guard let url = URL(string: scraperURL) else { return }

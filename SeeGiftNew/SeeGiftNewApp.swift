@@ -9,15 +9,16 @@ import SwiftUI
 
 @main
 struct SeeGiftNewApp: App {
-    
-    init() {
-        
-
-            
-    }
+    //var currUser = UserAccount()
+   @State var currUser = UserAccount()
+//    init() {
+//        
+//
+//            
+//    }
     var body: some Scene {
         WindowGroup {
-            HomeScreenView()
+            HomeScreenView().environment(currUser)
             //LoginPage().accentColor(.yellow).preferredColorScheme(.dark)
         }
     }

@@ -27,9 +27,10 @@
 
 import Foundation
 import WebKit
+import SwiftSoup
 
 
-class UserAccount: Identifiable {
+@Observable class UserAccount: Identifiable {
     var firstName: String = "Test"
     var lastName: String = "Account"
     var userName: String = "TestAccount" //This needs to be unique
@@ -326,6 +327,71 @@ func updateJSONFileOnNavigate() {
     
 }
 
+func fetchHTML(from urlString: String, completion: @escaping (String?, String?, [String], [downloadedGiftImage], Double?) -> Void) {
+            guard let url = URL(string: urlString) else {
+                completion(nil, nil, [], [], nil)
+                return
+            }
+
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data, error == nil, let html = String(data: data, encoding: .utf8) else {
+                    completion(nil, nil, [], [], nil)
+                    return
+                }
+
+                do {
+                    let document = try SwiftSoup.parse(html)
+                    
+                    // Extract title
+                    let title = try document.title()
+                    
+                    // Extract meta description
+                    let metaTag = try document.select("meta[name=description]").first()
+                    let metaDescription = try metaTag?.attr("content") ?? "No description"
+
+                    // Extract all links
+                    let linkElements = try document.select("a[href]")
+                    let extractedLinks = linkElements.array().compactMap { try? $0.attr("href") }
+
+                    // Extract all image sources
+                    let imageElements = try document.select("img[src]")
+                    let extractedImages = imageElements.array().compactMap { try? $0.attr("src") }
+                    let downloadedImages = extractedImages.map() { imageURL in
+                        let fixedURL = imageURL.hasPrefix("https") ? imageURL : "https:" + imageURL
+                       return downloadedGiftImage(url: fixedURL, isSelected: false)
+                    }
+                    //Extract price through various methods. Will just be blank if not found
+                    let productPrice = extractPrice(from: document)
+                    //let extractedPrice = Double(productPrice)
+                    DispatchQueue.main.async {
+                        completion(title, metaDescription, extractedLinks, downloadedImages, Double(productPrice))
+                    }
+                } catch {
+                    completion(nil, nil, [], [], nil)
+                }
+            }.resume()
+        }
+
+func extractPrice(from doc: Document) -> String {
+    let selectors = [
+        ".a-price-whole",                // Amazon
+        ".priceView-hero-price",         // Best Buy
+        ".product-price",                // Walmart
+        ".Price-characteristic",         // Target
+        ".price",                        // General fallback
+    ]
+    
+    for selector in selectors {
+        if let price = try? doc.select(selector).first()?.text(), !price.isEmpty {
+            var extractedPrice = price
+            //This essentially only returns number values
+            extractedPrice.removeAll { !"0123456789.".contains($0) }
+            return extractedPrice
+        }
+    }
+    
+    return "Price Not Found"
+}
 
 //Gifts
 

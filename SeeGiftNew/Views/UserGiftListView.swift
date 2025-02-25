@@ -10,6 +10,8 @@ import SwiftUI
 
 
 struct UserGiftListView: View {
+    @Environment(UserAccount.self) var currUser
+    
     @State var showDescPopup = false
     @State var showList = true
     @State var currGift: Gift = Gift()
@@ -59,5 +61,5 @@ struct UserGiftListView: View {
 }
 
 #Preview {
-    UserGiftListView()
+    UserGiftListView().environment(chris)
 }

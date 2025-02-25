@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeScreenView: View {
+    @State var currentUser: UserAccount = chris
     @State private var value = 1
     var body: some View {
         VStack{
@@ -15,24 +16,29 @@ struct HomeScreenView: View {
                      icon: {
                 Image(systemName: "gift").foregroundStyle(.yellow)
                      }) {}.font(.largeTitle)
-            //Text("HOME PAGE")
-//            TabView{
-//                Group {
-//                    UserGiftListView().tabItem({
-//                        Label("Home", systemImage: "house")
-//                    })
-//                    FriendGiftListView().tabItem({
-//                        Label("Account", systemImage: "person.circle")
-//                    })
-//                    AdminGroupSettingsView().tabItem({
-//                        Label("Groups", systemImage: "person.3.fill")
-//                    })
-//                }.toolbarBackground(.visible, for: .tabBar).toolbarBackground(.black, for: .tabBar)
-//            }
+            Text("HOME PAGE")
+            TabView{
+                Group {
+                    UserGiftListView().tabItem({
+                        Label("Home", systemImage: "house")
+                    })
+                    FriendGiftListView().tabItem({
+                        Label("Account", systemImage: "person.circle")
+                    })
+                    AdminGroupSettingsView().tabItem({
+                        Label("Groups", systemImage: "person.3.fill")
+                    })
+                }.toolbarBackground(.visible, for: .tabBar).toolbarBackground(.black, for: .tabBar)
+            }
             
             
             
-            AddGiftViaLinkView()
+            //AddGiftViaLinkView().environment(currentUser)
+            
+            
+            
+            
+            
     //                NavigationView {
     //
     //                ZStack {
@@ -75,7 +81,7 @@ struct HomeScreenView: View {
     //
     //            }
     //            .padding()
-        }.accentColor(.yellow).preferredColorScheme(.dark)
+        }.accentColor(.yellow).preferredColorScheme(.dark).environment(currentUser)
     }
 }
 
