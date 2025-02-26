@@ -97,7 +97,7 @@ class AdminAccount: UserAccount {
 }
 //struct Gift: Hashable {
 @Observable class Gift: Identifiable {
-    var name: String = "MISSING NAME"
+    var name: String = ""
     var price: Double = 0
     var description: String = ""
     //var userComments: String = ""
@@ -109,7 +109,7 @@ class AdminAccount: UserAccount {
     var isMostWanted: Bool = false
     var downloadedImages: [String] = []
     
-    init(name: String = "MISSING NAME", price: Double = 0, description: String = "", image: String = "", link: String = "", isGifted: Bool = false, giftID: Int = Int.random(in: 0...1000000000), isMostWanted: Bool = false, downloadedImages: [String] = []) {
+    init(name: String = "", price: Double = 0, description: String = "", image: String = "", link: String = "", isGifted: Bool = false, giftID: Int = Int.random(in: 0...1000000000), isMostWanted: Bool = false, downloadedImages: [String] = []) {
         self.name = name
         self.price = price
         self.description = description
