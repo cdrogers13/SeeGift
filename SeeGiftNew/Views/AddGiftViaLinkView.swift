@@ -122,7 +122,7 @@ struct LoadedGiftLinkView: View {
                      //.padding(.bottom)
                  }
                  Button("TEMP BUTTON TO SAVE") {
-                     //filters the images array to only the ones that are selected and then maps it to be just the actual string names.
+                     //filters the images array to onlyd the ones that are selected and then maps it to be just the actual string names.
                      //TODO: FROM HERE I WILL NEED TO ACTUALLY DOWNLOAD THOSE FILES AND THEN STORE THEM IN THE DOCUMENTS FOLDER OF THE APP, BUT FOR NOW THIS WILL SUFFICE
                      gift.downloadedImages = images.filter() {
                          $0.isSelected == true
