@@ -84,6 +84,20 @@ struct CustomComponents: View {
     }
 }
 
+struct LoadingView: View {
+    var body: some View {
+        ZStack {
+            Color.blue
+            VStack {
+                Text("Loading...")
+                ProgressView()
+            }
+        }
+    }
+}
+
+
+
 struct CheckboxToggleStyle: ToggleStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack {

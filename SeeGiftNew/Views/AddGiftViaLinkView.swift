@@ -132,13 +132,7 @@ struct LoadedGiftLinkView: View {
                  }
              }
              if (!doneLoading) {
-                 ZStack {
-                     Color.blue
-                     VStack {
-                         Text("Loading...")
-                         ProgressView()
-                     }
-                 }
+                 LoadingView()
              }
         }
     }
