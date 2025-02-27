@@ -395,12 +395,12 @@ func extractPrice(from doc: Document) -> String {
 
 //Gifts
 
-var newGift = Gift(name: "Mountain Bike", price: 100, description: "This is a test gift", image: "Bike", link: "https://www.google.com", isMostWanted: true)
-var newGift2 = Gift(name: "3-Body Problem", price: 35, description: "Book I would really like to read", image: "Test4", link: "https://www.amazon.com", isGifted: true)
-var newGift3 = Gift(name: "Barbie Doll", price: 25, description: "Uglah Barbie", image: "Baby Doll", link: "https://www.google.com")
-var newGift4 = Gift(name: "Test Gift3", price: 75, description: "This is yet another test gift", image: "Test3", link: "https://www.google.com")
-var newGift5 = Gift(name: "Test Gift4", price: 60, description: "Yup...another test gift", image: "Test2", link: "https://www.google.com")
-var newGift6 = Gift(name: "Test Gift5", price: 35, description: "This is a test gift", image: "Test3", link: "https://www.google.com")
+var newGift = Gift(name: "Mountain Bike", price: 100, description: "This is a test gift", image: "Bike", link: "https://www.google.com", isMostWanted: true, downloadedImages: ["Bike", "Test4", "Test2"])
+var newGift2 = Gift(name: "3-Body Problem", price: 35, description: "Book I would really like to read", image: "Test4", link: "https://www.amazon.com", isGifted: true, downloadedImages: ["Test4", "Bike", "Test2"])
+var newGift3 = Gift(name: "Barbie Doll", price: 25, description: "Uglah Barbie", image: "Baby Doll", link: "https://www.google.com", downloadedImages: ["Baby Doll"])
+var newGift4 = Gift(name: "Test Gift3", price: 75, description: "This is yet another test gift", image: "Test3", link: "https://www.google.com", downloadedImages: ["Test3", "Test4", "Test2"])
+var newGift5 = Gift(name: "Test Gift4", price: 60, description: "Yup...another test gift", image: "Test2", link: "https://www.google.com", downloadedImages: ["Test2", "Bike"])
+var newGift6 = Gift(name: "Test Gift5", price: 35, description: "This is a test gift", image: "Test3", link: "https://www.google.com", downloadedImages: ["Bike", "Test4", "Test2"])
 var testGiftList: [Gift] = [newGift, newGift2, newGift3]
 
 

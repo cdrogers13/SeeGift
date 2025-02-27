@@ -94,11 +94,11 @@ struct LoadedGiftLinkView: View {
                  VStack{
                      Text("Select Gift Images:")
                      ScrollView (.horizontal){
-                         LazyHStack {
+                         HStack {
                              ForEach($images, id: \.self) { $img in
                                  if let url = URL(string: img.url) {
                                      if (img.url.hasSuffix("jpg") || img.url.contains("fmt=jpeg") ) {
-                                         ZStack(alignment: .topTrailing) {
+                                         VStack(alignment: .center) {
                                              AsyncImage(url: url) { phase in
                                                  if let image = phase.image {
                                                      image.resizable().scaledToFit()//.frame(height: 150)
@@ -111,13 +111,10 @@ struct LoadedGiftLinkView: View {
                                              .cornerRadius(10)
                                              checkBoxItemView(isSelected: $img.isSelected)
                                          }
-                                         
                                      }
-                                     
                                  }
                              }
                          }
-                         
                      }
                      //.padding(.bottom)
                  }
@@ -127,6 +124,8 @@ struct LoadedGiftLinkView: View {
                      gift.downloadedImages = images.filter() {
                          $0.isSelected == true
                      }.map({$0.url})
+                     //Download those images here
+                     
                      currUser.giftsList.append(gift)
                      print(currUser)
                  }
@@ -137,6 +136,29 @@ struct LoadedGiftLinkView: View {
         }
     }
 }
+
+//This caches the image that Async downloads so that the image doesnt have to refresh each time the state changes
+//struct FetchedImageView: View {
+//    let url: String
+//    @State var image: Image
+//    var body: some View {
+//        if let url = URL(string: img.url) {
+//            if (img.url.hasSuffix("jpg") || img.url.contains("fmt=jpeg") ) {
+//                VStack(alignment: .center) {
+//                    AsyncImage(url: url) { phase in
+//                        if let image = phase.image {
+//                            image.resizable().scaledToFit()//.frame(height: 150)
+//                        } else {
+//                            ProgressView()
+//                        }
+//                    }
+//                    .frame(width: 200, height: 150)
+//                    .background(Color.gray.opacity(0.2))
+//                    .cornerRadius(10)
+//                    checkBoxItemView(isSelected: $img.isSelected)
+//                }
+//    }
+//}
 
 struct downloadedGiftImage: Hashable {
     var url: String = ""

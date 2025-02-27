@@ -9,17 +9,18 @@ import SwiftUI
 
 
 struct GiftDetailView: View {
+    @Environment(UserAccount.self) var currUser
     @Binding var showList: Bool
     @Binding var showDescPopup: Bool
     @Binding var gift: Gift
-    @Binding var giftList: [Gift]
+    //@Binding var giftList: [Gift]
     @Binding var currFavGiftIndex: Int
     var body: some View {
         
         VStack{
             Button("Close") {
-                if (gift.isMostWanted && gift !== giftList[currFavGiftIndex]) {
-                    giftList[currFavGiftIndex].isMostWanted = false
+                if (gift.isMostWanted && gift !== currUser.giftsList[currFavGiftIndex]) {
+                    currUser.giftsList[currFavGiftIndex].isMostWanted = false
                 }
                 showList.toggle() //List and description popup should always be opposites
                 showDescPopup.toggle()
@@ -33,9 +34,30 @@ struct GiftDetailView: View {
                 }
             }
             ZStack(alignment: .top) {
-                Image(gift.image).resizable().scaledToFit().cornerRadius(120)
+                ScrollView (.horizontal) {
+                    HStack {
+                        ForEach(gift.downloadedImages, id: \.self) { image in
+                            Image(image).resizable().scaledToFit().cornerRadius(45)
+                        }
+                    }
+                }
+//                ScrollView(.horizontal) {
+//                    HStack(spacing: 10) {
+//                        ForEach(gift.downloadedImages, id: \.self) { image in
+//                            Image(image)
+//                                .resizable()
+//                                .scaledToFit()
+//                                .frame(width: max(120, UIScreen.main.bounds.width * 0.8),  // Minimum 120, scales up to 20% of screen width
+//                                       height: max(120, UIScreen.main.bounds.width * 0.8)) // Keeps aspect ratio
+//                                .cornerRadius(15)
+//                        }
+//                    }
+//                }
                 
-            }
+//                Image(gift.image).resizable().scaledToFit().cornerRadius(120)
+                
+            }.padding()
+            
             VStack(alignment: .leading){
                 HStack{
                     if let url = URL(string: "\(gift.link)") {
@@ -50,14 +72,14 @@ struct GiftDetailView: View {
                 Toggle(isOn: $gift.isMostWanted, label: {
                     Text("Mark As Most Wanted")
                 }).toggleStyle(FavoritedToggleStyle())
-            }
+            }.padding()
             VStack{
                 Text(gift.description)
             }.padding(.top)
-        }.frame(maxWidth: .infinity, maxHeight: .infinity)
+        }//.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 #Preview {
-    GiftDetailView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[1]), giftList: .constant(testGiftList), currFavGiftIndex: .constant(0))
+    GiftDetailView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[1]), /*currUser.giftsList: .constant(testGiftList),*/ currFavGiftIndex: .constant(0)).environment(chris)
 }

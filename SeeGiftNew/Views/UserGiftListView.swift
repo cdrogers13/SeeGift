@@ -22,15 +22,17 @@ struct UserGiftListView: View {
         VStack{
             
             if (showDescPopup) {
-                GiftDetailView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift, giftList: $newList, currFavGiftIndex: $currFavGiftIndex)
+                GiftDetailView(showList: $showList, showDescPopup: $showDescPopup, gift: $currGift, /*giftList: $currUser.giftsList, */currFavGiftIndex: $currFavGiftIndex)
             }
             if (showList) {
                 NavigationView {
                     ScrollView (showsIndicators: false) {
-                        ForEach(newList) {gift in
+//                        ForEach(newList) {gift in
+                        ForEach(currUser.giftsList) {gift in
                             Button(action: {
                                 currGift = gift
-                                currFavGiftIndex = newList.firstIndex(where: { $0.isMostWanted }) ?? 0
+                                currFavGiftIndex = currUser.giftsList.firstIndex(where: {
+                                /*currFavGiftIndex = newList.firstIndex(where: {*/ $0.isMostWanted }) ?? 0
                                 showDescPopup.toggle()
                                 showList.toggle() //List and description popup should always be opposites
                             }) {
@@ -50,7 +52,8 @@ struct UserGiftListView: View {
                             }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
                         }.listRowBackground(Color.black)
                         //Color.black.ignoresSafeArea(.all)
-                        NavigationLink (destination: AddGiftView(createdUser)){
+//                        NavigationLink (destination: AddGiftView(createdUser)){
+                        NavigationLink (destination: AddGiftViaLinkView()){
                             Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
                         }.padding([.bottom])
                     }.padding()

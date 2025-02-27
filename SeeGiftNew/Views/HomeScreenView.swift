@@ -16,7 +16,7 @@ struct HomeScreenView: View {
                      icon: {
                 Image(systemName: "gift").foregroundStyle(.yellow)
                      }) {}.font(.largeTitle)
-            Text("HOME PAGE")
+            
             TabView{
                 Group {
                     UserGiftListView().tabItem({
