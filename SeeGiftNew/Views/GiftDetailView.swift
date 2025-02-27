@@ -33,14 +33,12 @@ struct GiftDetailView: View {
 //                    Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
                 }
             }
-            ZStack(alignment: .top) {
-                ScrollView (.horizontal) {
-                    HStack {
-                        ForEach(gift.downloadedImages, id: \.self) { image in
-                            Image(image).resizable().scaledToFit().cornerRadius(45)
-                        }
-                    }
+            TabView() {
+                ForEach(gift.downloadedImages, id: \.self) { image in
+                    Image(image).resizable().scaledToFit().cornerRadius(45)
                 }
+            }.tabViewStyle(PageTabViewStyle())
+         
 //                ScrollView(.horizontal) {
 //                    HStack(spacing: 10) {
 //                        ForEach(gift.downloadedImages, id: \.self) { image in
@@ -56,30 +54,30 @@ struct GiftDetailView: View {
                 
 //                Image(gift.image).resizable().scaledToFit().cornerRadius(120)
                 
-            }.padding()
+            //}.padding()
             
-            VStack(alignment: .leading){
+            VStack(alignment: .center){
                 HStack{
                     if let url = URL(string: "\(gift.link)") {
-                        Text("Purchasing Link: ")
+                        //Text("Purchasing Link: ")
                         Link(gift.link, destination: url)
                     }
                 }
                 HStack{
-                    Text("Gift Price: ")
+                    //Text("Gift Price: ")
                     Text(gift.price, format: .currency(code: "USD"))
                 }
                 Toggle(isOn: $gift.isMostWanted, label: {
                     Text("Mark As Most Wanted")
                 }).toggleStyle(FavoritedToggleStyle())
-            }.padding()
+            }.padding(.bottom)
             VStack{
                 Text(gift.description)
-            }.padding(.top)
+            }//.padding(.bottom)
         }//.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 #Preview {
-    GiftDetailView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[1]), /*currUser.giftsList: .constant(testGiftList),*/ currFavGiftIndex: .constant(0)).environment(chris)
+    GiftDetailView(showList: .constant(true), showDescPopup: .constant(true), gift: .constant(testGiftList[2]), /*currUser.giftsList: .constant(testGiftList),*/ currFavGiftIndex: .constant(0)).environment(chris)
 }

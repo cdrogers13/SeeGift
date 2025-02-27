@@ -401,7 +401,7 @@ var newGift3 = Gift(name: "Barbie Doll", price: 25, description: "Uglah Barbie",
 var newGift4 = Gift(name: "Test Gift3", price: 75, description: "This is yet another test gift", image: "Test3", link: "https://www.google.com", downloadedImages: ["Test3", "Test4", "Test2"])
 var newGift5 = Gift(name: "Test Gift4", price: 60, description: "Yup...another test gift", image: "Test2", link: "https://www.google.com", downloadedImages: ["Test2", "Bike"])
 var newGift6 = Gift(name: "Test Gift5", price: 35, description: "This is a test gift", image: "Test3", link: "https://www.google.com", downloadedImages: ["Bike", "Test4", "Test2"])
-var testGiftList: [Gift] = [newGift, newGift2, newGift3]
+var testGiftList: [Gift] = [newGift, newGift2, newGift4]
 
 
 //UserAccounts

@@ -30,18 +30,24 @@ struct FriendGiftDetailView: View {
             }
             
             ZStack(alignment: .top) {
-                Image(gift.image).resizable().scaledToFit().cornerRadius(120)
+                TabView() {
+                
+                        ForEach(gift.downloadedImages, id: \.self) { image in
+                            Image(image).resizable().scaledToFit().cornerRadius(120)
+                        
+                    }
+                }.tabViewStyle(PageTabViewStyle())
                 
             }
-            VStack(alignment: .leading){
+            VStack(alignment: .center){
                 HStack{
                     if let url = URL(string: "\(gift.link)") {
-                        Text("Purchasing Link: ")
+                        //Text("Purchasing Link: ")
                         Link(gift.link, destination: url)
                     }
                 }
                 HStack{
-                    Text("Gift Price: ")
+                    //Text("Gift Price: ")
                     Text(gift.price, format: .currency(code: "USD"))
                 }
                 Toggle(isOn: $gift.isGifted, label: {
