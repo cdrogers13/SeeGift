@@ -14,6 +14,7 @@ struct UserGiftListView: View {
     
     @State var showDescPopup = false
     @State var showList = true
+    @State var showAddGiftPopup: Bool = false
     @State var currGift: Gift = Gift()
     @State var newList = testGiftList
     @State var createdUser: UserAccount = UserAccount()
@@ -26,37 +27,59 @@ struct UserGiftListView: View {
             }
             if (showList) {
                 NavigationView {
-                    ScrollView (showsIndicators: false) {
-//                        ForEach(newList) {gift in
-                        ForEach(currUser.giftsList) {gift in
-                            Button(action: {
-                                currGift = gift
-                                currFavGiftIndex = currUser.giftsList.firstIndex(where: {
-                                /*currFavGiftIndex = newList.firstIndex(where: {*/ $0.isMostWanted }) ?? 0
-                                showDescPopup.toggle()
-                                showList.toggle() //List and description popup should always be opposites
-                            }) {
-                                ZStack(alignment: .topTrailing) {
-                                    HStack{
-                                        Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
-                                        Spacer()
-                                        VStack (alignment: .trailing){
-                                            Text(gift.name)
-                                            Text(gift.price, format: .currency(code: "USD"))
+                    ZStack {
+                        ScrollView (showsIndicators: false) {
+                            //                        ForEach(newList) {gift in
+                            ForEach(currUser.giftsList) {gift in
+                                Button(action: {
+                                    currGift = gift
+                                    currFavGiftIndex = currUser.giftsList.firstIndex(where: {
+                                        /*currFavGiftIndex = newList.firstIndex(where: {*/ $0.isMostWanted }) ?? 0
+                                    showDescPopup.toggle()
+                                    showList.toggle() //List and description popup should always be opposites
+                                }) {
+                                    ZStack(alignment: .topTrailing) {
+                                        HStack{
+                                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+                                            Spacer()
+                                            VStack (alignment: .trailing){
+                                                Text(gift.name)
+                                                Text(gift.price, format: .currency(code: "USD"))
+                                            }
+                                        }.padding()
+                                        if (gift.isMostWanted) {
+                                            Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
                                         }
-                                    }.padding()
-                                    if (gift.isMostWanted) {
-                                        Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
+                                    }
+                                }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
+                            }.listRowBackground(Color.black)
+                            //Color.black.ignoresSafeArea(.all)
+                            //                        NavigationLink (destination: AddGiftView(createdUser)){
+                            NavigationLink (destination: AddGiftViaLinkView()){
+                                Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
+                            }.padding([.bottom])
+                        }.padding()
+                        if (showAddGiftPopup) {
+                            Button(action: { print("HI")})
+                            {
+                                HStack {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 50)
+                                        Label("Generate Your Giftee!", systemImage: "gift").foregroundStyle(.black)
+                                    }
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 50)
+                                        Label("Generate Your Giftee!", systemImage: "gift").foregroundStyle(.black)
                                     }
                                 }
-                            }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
-                        }.listRowBackground(Color.black)
-                        //Color.black.ignoresSafeArea(.all)
-//                        NavigationLink (destination: AddGiftView(createdUser)){
-                        NavigationLink (destination: AddGiftViaLinkView()){
-                            Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
-                        }.padding([.bottom])
-                    }.padding()
+                                
+                            }.contentShape(Circle())
+                        }
+                    }
+                    
+                }
+                Button("Add Gift") {
+                    showAddGiftPopup.toggle();
                 }
             }
         }//.background(Color.black).foregroundStyle(.white)

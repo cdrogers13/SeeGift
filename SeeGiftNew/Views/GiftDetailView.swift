@@ -26,6 +26,15 @@ struct GiftDetailView: View {
                 showDescPopup.toggle()
                 
             }.buttonStyle(CloseButton())//.padding([.bottom], 8)
+            Button("Delete Gift") {
+                print("NEEDS TO BE IMPLEMENTED")
+//                if (gift.isMostWanted && gift !== currUser.giftsList[currFavGiftIndex]) {
+//                    currUser.giftsList[currFavGiftIndex].isMostWanted = false
+//                }
+//                showList.toggle() //List and description popup should always be opposites
+//                showDescPopup.toggle()
+                
+            }
             HStack {
                 Text(gift.name).font(.largeTitle)
                 if (gift.isMostWanted) {
