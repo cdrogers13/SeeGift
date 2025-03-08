@@ -58,10 +58,11 @@ struct LoadedGiftLinkView: View {
                  Text("Verify Gift Information Before Saving")
                  
                  VStack(spacing: 10) {
-                     Form {
+                     //Form {
                          VStack {
                              Text("Gift Name:")
-                             TextEditor(text: $gift.name).multilineTextAlignment(.center)
+//                             TextEditor(text: $gift.name).multilineTextAlignment(.center)
+                             TextField("Gift Name", text: $gift.name ).multilineTextAlignment(.center)
                          }
                          VStack {
                              Text("Gift Price:")
@@ -72,9 +73,9 @@ struct LoadedGiftLinkView: View {
                              Text(gift.link).multilineTextAlignment(.center)
                          }
                          
-                     }
+                     //}
                  }.onAppear {
-                     fetchHTML(from: amazonLink) { title, meta, extractedLinks, extractedImages, price in
+                     fetchHTML(from: mozaLink) { title, meta, extractedLinks, extractedImages, price in
                          self.pageTitle = title ?? "Failed to load"
                          self.metaDescription = meta ?? "No Meta Description"
                          self.links = extractedLinks

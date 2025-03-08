@@ -19,7 +19,7 @@
  
  -NEED TO FIGURE OUT HOW TO FIX THE ISSUE OF MULTI-LEVEL NAVIGATIONLINKS PUTTING MORE THAN ONE BACK BUTTON ON SCREEN. MY GUESS IS TO USE THE STACK INSTEAD OF THE LINKS
  
- -THINK I WANT TO CHANGE RANKINGS TO ONE MOST WANTED GIFT PER LIST INSTEAD OF A RANKING SYSTEM. PROBABLY EASIER ON ALL FRONTS TO BE HONEST
+ -THINK I WANT TO CHANGE RANKINGS TO ONE MOST WANTED GIFT PER LIST INSTEAD OF A RANKING SYSTEM. PROBABLY EASIER ON ALL FRONTS TO BE HONEST (DONE!)
  
  -USE NEW PICTURE DOWNLOAD TO CREATE A CHECKLIST VIEW WHERE USERS CAN SELECT WHAT PICS THEY WANT TO USE FROM THE WEB LINK
  */
@@ -37,7 +37,7 @@ import SwiftSoup
     var password: String = "Password"
     var spouse = ""
     var profilePicture: String = "Profile Silhouette"
-    //Profile PIcture maybe? Not sure how to do this yet obviously
+    //Profile Picture maybe? Not sure how to do this yet obviously
     var giftsList: [Gift] = []
     var friendsList: [UserAccount] = []
     var isUserPublic: Bool = false
@@ -425,5 +425,6 @@ var x24: UserGroup = UserGroup(groupName: "X24", members: [chris, brigette, coll
 
 
 var userGroupsArray = [mourningFamily, x24]
+
 
 

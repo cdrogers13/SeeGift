@@ -54,6 +54,7 @@ struct StandardGiftButton : View {
     @Binding var showDescPopup : Bool
     @Binding var showList : Bool
     @Binding var currGift: Gift
+    let defaultGiftImage: Image = Image(systemName: "gift.fill")
     var gift: Gift = Gift()
     
     var body: some View {
@@ -66,7 +67,12 @@ struct StandardGiftButton : View {
                 
                 ZStack(alignment: .topTrailing) {
                     HStack{
-                        Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+                        if (gift.image.isEmpty) {
+                            defaultGiftImage
+                        }
+                        else {
+                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+                        }
                         Spacer()
                         VStack (alignment: .trailing){
                             Text(gift.name)
@@ -87,6 +93,7 @@ struct IsGiftedButton : View {
     @Binding var showDescPopup : Bool
     @Binding var showList : Bool
     @Binding var currGift: Gift
+    let defaultGiftImage: Image = Image(systemName: "gift.fill")
     var gift: Gift = Gift()
     
     var body: some View {
@@ -100,7 +107,11 @@ struct IsGiftedButton : View {
                     Label("GIFTED!", systemImage: "gift.circle.fill").labelStyle(FlippedLabelStyle(textColor: .black, picColor: .green))
                     ZStack(alignment: .topTrailing) {
                         HStack{
-                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200).padding([.bottom])
+                            if (gift.image.isEmpty) {
+                                defaultGiftImage
+                            }
+                            else { Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200).padding([.bottom])
+                            }
                             Spacer()
                             VStack (alignment: .trailing){
                                 Text(gift.name)

@@ -15,6 +15,7 @@ struct GiftDetailView: View {
     @Binding var gift: Gift
     //@Binding var giftList: [Gift]
     @Binding var currFavGiftIndex: Int
+    let defaultGiftImage: Image = Image(systemName: "gift.fill")
     var body: some View {
         
         VStack{
@@ -43,8 +44,13 @@ struct GiftDetailView: View {
                 }
             }
             TabView() {
-                ForEach(gift.downloadedImages, id: \.self) { image in
-                    Image(image).resizable().scaledToFit().cornerRadius(45)
+                if (gift.downloadedImages.isEmpty) {
+                    defaultGiftImage.resizable().scaledToFit().cornerRadius(120)
+                }
+                else {
+                    ForEach(gift.downloadedImages, id: \.self) { image in
+                        Image(image).resizable().scaledToFit().cornerRadius(45)
+                    }
                 }
             }.tabViewStyle(PageTabViewStyle())
          

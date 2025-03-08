@@ -135,10 +135,12 @@ struct FavoritedToggleStyle: ToggleStyle {
 
 //Place icon on top of words vertically
 struct VerticalLabelStyle: LabelStyle {
+    @State var textColor: Color = .black
+    @State var picColor: Color = .black
     func makeBody(configuration: Configuration) -> some View {
         VStack(alignment: .center, spacing: 8) {
-            configuration.icon
-            configuration.title
+            configuration.icon.foregroundStyle(picColor)
+            configuration.title.foregroundStyle(textColor)
         }
     }
 }

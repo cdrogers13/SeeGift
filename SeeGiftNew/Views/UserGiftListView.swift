@@ -19,6 +19,7 @@ struct UserGiftListView: View {
     @State var newList = testGiftList
     @State var createdUser: UserAccount = UserAccount()
     @State var currFavGiftIndex: Int = 0
+    let defaultGiftImage: Image = Image(systemName: "gift.fill")
     var body: some View {
         VStack{
             
@@ -40,7 +41,12 @@ struct UserGiftListView: View {
                                 }) {
                                     ZStack(alignment: .topTrailing) {
                                         HStack{
-                                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+                                            if (gift.image.isEmpty) {
+                                                defaultGiftImage
+                                            }
+                                            else {
+                                                Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+                                            }
                                             Spacer()
                                             VStack (alignment: .trailing){
                                                 Text(gift.name)
@@ -51,36 +57,50 @@ struct UserGiftListView: View {
                                             Image(systemName: "star.fill").resizable().frame(width: 20, height: 20).padding()
                                         }
                                     }
-                                }.background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
+                                }.allowsHitTesting(showAddGiftPopup ? false : true).background(Color.yellow).foregroundStyle(.black).clipShape(RoundedRectangle(cornerRadius: 30))
                             }.listRowBackground(Color.black)
                             //Color.black.ignoresSafeArea(.all)
                             //                        NavigationLink (destination: AddGiftView(createdUser)){
-                            NavigationLink (destination: AddGiftViaLinkView()){
-                                Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
-                            }.padding([.bottom])
-                        }.padding()
-                        if (showAddGiftPopup) {
-                            Button(action: { print("HI")})
+//                            NavigationLink (destination: AddGiftViaLinkView()){
+//                                Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
+//                            }.padding([.bottom])
+                            Button(action: {
+                                showAddGiftPopup.toggle()
+                            })
                             {
+                                Label(showAddGiftPopup ? "Cancel" : "Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
+                            }
+                        }.padding().blur(radius: showAddGiftPopup ? 15 : 0).onTapGesture {
+                            showAddGiftPopup = false
+                        }
+                        //Let user select between adding a gift via link or manually when they click add gift
+                        if (showAddGiftPopup) {
+                            VStack {
                                 HStack {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 50)
-                                        Label("Generate Your Giftee!", systemImage: "gift").foregroundStyle(.black)
+                                    NavigationLink (destination: AddGiftViaLinkView())
+                                    {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 50).fill(.black).frame(width: 150, height: 150)
+                                            Label("Add Gift Via Link", systemImage: "gift").foregroundStyle(.black).imageScale(.large).labelStyle(VerticalLabelStyle(textColor: .yellow, picColor: .yellow))
+                                        }
+                                    }//.background(.ultraThickMaterial)
+                                    Button(action: { print("HI")})
+                                    {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 50).fill(.black).frame(width: 150, height: 150)
+                                            Label("Add Gift Manually", systemImage: "gift").foregroundStyle(.black).imageScale(.large).labelStyle(VerticalLabelStyle(textColor: .yellow, picColor: .yellow))
+                                        }
                                     }
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 50)
-                                        Label("Generate Your Giftee!", systemImage: "gift").foregroundStyle(.black)
-                                    }
-                                }
-                                
-                            }.contentShape(Circle())
+                                }.padding()
+                                Button("Cancel") {
+                                    showAddGiftPopup.toggle();
+                                }.padding([.top], 20).foregroundStyle(.black)
+                            }
                         }
                     }
                     
                 }
-                Button("Add Gift") {
-                    showAddGiftPopup.toggle();
-                }
+                
             }
         }//.background(Color.black).foregroundStyle(.white)
     }//.background(Color.black)

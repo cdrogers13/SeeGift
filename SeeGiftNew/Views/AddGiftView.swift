@@ -37,10 +37,6 @@ struct AddGiftView: View {
                         Text("URL Link:")
                         TextField("URL Link", text: $link).multilineTextAlignment(.trailing)
                     }
-                    HStack {
-                        Text("Gift Ranking:")
-                        TextField("Gift Ranking", value: $ranking, format: .number).multilineTextAlignment(.trailing)
-                    }
                     TextField("Item Description", text: $description).frame(height: 100, alignment: .top)
                     
                     

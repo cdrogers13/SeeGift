@@ -13,7 +13,7 @@ struct FriendGiftDetailView: View {
     @Binding var showDescPopup: Bool
     @Binding var gift: Gift
     //@State var isGifted: Bool = false
-    
+    let defaultGiftImage: Image = Image(systemName: "gift.fill")
     let testGift = testGiftList[1]
     var body: some View {
         VStack{
@@ -31,13 +31,15 @@ struct FriendGiftDetailView: View {
             
             ZStack(alignment: .top) {
                 TabView() {
-                
+                    if (gift.downloadedImages.isEmpty) {
+                        defaultGiftImage.resizable().scaledToFit().cornerRadius(120)
+                    }
+                    else {
                         ForEach(gift.downloadedImages, id: \.self) { image in
                             Image(image).resizable().scaledToFit().cornerRadius(120)
-                        
+                        }
                     }
                 }.tabViewStyle(PageTabViewStyle())
-                
             }
             VStack(alignment: .center){
                 HStack{
