@@ -22,6 +22,8 @@
  -THINK I WANT TO CHANGE RANKINGS TO ONE MOST WANTED GIFT PER LIST INSTEAD OF A RANKING SYSTEM. PROBABLY EASIER ON ALL FRONTS TO BE HONEST (DONE!)
  
  -USE NEW PICTURE DOWNLOAD TO CREATE A CHECKLIST VIEW WHERE USERS CAN SELECT WHAT PICS THEY WANT TO USE FROM THE WEB LINK
+ 
+ -CHANGE JOINEDGROUPS ON THE USER ACCOUNT TO JUST BE AN ARRAY OF CREATED GROUPS INSTEAD OF USING THE ID TO DO A LOOKUP ON THE VIEW ITSELF. THIS COULD BE PROBLEMATIC AT SCALE WITH THE WAY ITS CURRENTLY DESIGNED
  */
 
 
@@ -47,8 +49,9 @@ import SwiftSoup
         giftsList.reduce(0) { $0 + $1.price }
     }
     var gifteeList: [UserAccount] = []
+    var joinedGroups: [Int] = []
     
-    init(firstName: String = "Test", lastName: String = "Account", userName: String = "TestAccount", password: String = "Password", spouse: String = "", giftsList: [Gift] = [], friendsList: [UserAccount] = [], isUserPublic: Bool = false, isFriendsListPublic: Bool = false, gifteeList: [UserAccount] = []) {
+    init(firstName: String = "Test", lastName: String = "Account", userName: String = "TestAccount", password: String = "Password", spouse: String = "", giftsList: [Gift] = [], friendsList: [UserAccount] = [], isUserPublic: Bool = false, isFriendsListPublic: Bool = false, gifteeList: [UserAccount] = [], joinedGroups: [Int] = []) {
         self.firstName = firstName
         self.lastName = lastName
         self.userName = userName
@@ -59,7 +62,9 @@ import SwiftSoup
         self.isUserPublic = isUserPublic
         self.isFriendsListPublic = isFriendsListPublic
         self.gifteeList = gifteeList
+        self.joinedGroups = joinedGroups
     }
+    
     func addGiftToList(_ gift: inout Gift) {
         if (giftsList.contains(where: {$0.giftID == gift.giftID})) {
             gift.giftID = Int.random(in: 1...1000000000)
@@ -135,6 +140,7 @@ enum GroupType : String {
 
 class UserGroup: Identifiable {
     var groupName: String
+    var groupId: Int
     var groupAdmins: [UserAccount]
     var members: [UserAccount]
     var groupType: GroupType //Family or Friend...probably use an enum here actually
@@ -145,7 +151,7 @@ class UserGroup: Identifiable {
     var groupImage: String = ""
     //var takenGiftees: [String] = [] //This will be user name of people taken in the group already
     
-    init(groupName: String = "Test Group", members: [UserAccount] = [], groupAdmins: [UserAccount] = [], groupType: GroupType = GroupType.friend, giftGivingCombos: [Int : [String : String]] = [:], settings: GroupSettings = GroupSettings(), currentYear: Int, availableGiftees: [UserAccount] = []) {
+    init(groupName: String = "Test Group", members: [UserAccount] = [], groupAdmins: [UserAccount] = [], groupType: GroupType = GroupType.friend, giftGivingCombos: [Int : [String : String]] = [:], settings: GroupSettings = GroupSettings(), currentYear: Int, availableGiftees: [UserAccount] = [], groupId: Int = Int.random(in: 0...1000000000)) {
         self.groupName = groupName
         self.members = members
         self.groupAdmins = groupAdmins
@@ -154,6 +160,7 @@ class UserGroup: Identifiable {
         self.settings = settings
         self.currentYear = currentYear
         self.availableGiftees = availableGiftees
+        self.groupId = groupId
     }
     
     func isAdmin(_ user: UserAccount) -> Bool {
@@ -393,6 +400,11 @@ func extractPrice(from doc: Document) -> String {
     return "Price Not Found"
 }
 
+//Filter the entire list of created groups for groups that the passed user is a member of
+func loadUserGroups(user: UserAccount) -> [UserGroup] {
+   return createdGroups.filter({user.joinedGroups.contains($0.groupId)})
+}
+
 //Gifts
 
 var newGift = Gift(name: "Mountain Bike", price: 100, description: "This is a test gift", image: "Bike", link: "https://www.google.com", isMostWanted: true, downloadedImages: ["Bike", "Test4", "Test2"])
@@ -405,26 +417,26 @@ var testGiftList: [Gift] = [newGift, newGift2, newGift4]
 
 
 //UserAccounts
-var chris = UserAccount(firstName: "Chris", lastName: "Rogers", userName: "juice", spouse: "Brigette", giftsList: [newGift, newGift4])
-var brigette = UserAccount(firstName: "Brigette", lastName: "Rogers", userName: "brig", spouse: "Chris")
-var collin = UserAccount(firstName: "Collin", lastName: "Rogers", userName: "cdrog", spouse: "Megan")
-var meg = UserAccount(firstName: "Megan", lastName: "Rogers", userName: "megv", spouse: "Collin")
-var Aaron = UserAccount(firstName: "Aaron", lastName: "Christopher", userName: "aaron", spouse: "")
-var Nick = UserAccount(firstName: "Nick", lastName: "Mourning", userName: "nickm", spouse: "")
-var Josh = UserAccount(firstName: "Josh", lastName: "Mourning", userName: "joshm", spouse: "")
-var Bella = UserAccount(firstName: "Bella", lastName: "Mourning", userName: "bellam", spouse: "")
-var Ken = UserAccount(firstName: "Ken", lastName: "Mourning", userName: "kenm", spouse: "mariem")
-var Marie = UserAccount(firstName: "Marie", lastName: "Mourning", userName: "mariem", spouse: "kenm")
+var chris = UserAccount(firstName: "Chris", lastName: "Rogers", userName: "juice", spouse: "Brigette", giftsList: [newGift, newGift4], joinedGroups: [1,2])
+var brigette = UserAccount(firstName: "Brigette", lastName: "Rogers", userName: "brig", spouse: "Chris", joinedGroups: [1,2])
+var collin = UserAccount(firstName: "Collin", lastName: "Rogers", userName: "cdrog", spouse: "Megan", joinedGroups: [2])
+var meg = UserAccount(firstName: "Megan", lastName: "Rogers", userName: "megv", spouse: "Collin", joinedGroups: [2])
+var Aaron = UserAccount(firstName: "Aaron", lastName: "Christopher", userName: "aaron", spouse: "", joinedGroups: [2])
+var Nick = UserAccount(firstName: "Nick", lastName: "Mourning", userName: "nickm", spouse: "", joinedGroups: [1])
+var Josh = UserAccount(firstName: "Josh", lastName: "Mourning", userName: "joshm", spouse: "", joinedGroups: [1])
+var Bella = UserAccount(firstName: "Bella", lastName: "Mourning", userName: "bellam", spouse: "", joinedGroups: [1])
+var Ken = UserAccount(firstName: "Ken", lastName: "Mourning", userName: "kenm", spouse: "mariem", joinedGroups: [1])
+var Marie = UserAccount(firstName: "Marie", lastName: "Mourning", userName: "mariem", spouse: "kenm", joinedGroups: [1])
 
 //UserGroups
-var mourningFamily: UserGroup = UserGroup(groupName: "Mourning Family", members: [chris, brigette, Nick, Josh, Bella, Ken, Marie], groupAdmins: [chris, brigette], groupType: .family, currentYear: 2025, availableGiftees: [chris, brigette, Nick, Josh, Bella, Ken, Marie])
+var mourningFamily: UserGroup = UserGroup(groupName: "Mourning Family", members: [chris, brigette, Nick, Josh, Bella, Ken, Marie], groupAdmins: [chris, brigette], groupType: .family, currentYear: 2025, availableGiftees: [chris, brigette, Nick, Josh, Bella, Ken, Marie], groupId: 1)
 
-var x24: UserGroup = UserGroup(groupName: "X24", members: [chris, brigette, collin, meg, Aaron], groupAdmins: [chris, brigette], groupType: .family, currentYear: 2025, availableGiftees: [chris, brigette, collin, meg, Aaron])
-
-
+var x24: UserGroup = UserGroup(groupName: "X24", members: [chris, brigette, collin, meg, Aaron], groupAdmins: [chris, brigette], groupType: .family, currentYear: 2025, availableGiftees: [chris, brigette, collin, meg, Aaron], groupId: 2)
 
 
-var userGroupsArray = [mourningFamily, x24]
+
+
+var createdGroups = [mourningFamily, x24]
 
 
 

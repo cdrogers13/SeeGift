@@ -27,15 +27,25 @@ struct GiftDetailView: View {
                 showDescPopup.toggle()
                 
             }.buttonStyle(CloseButton())//.padding([.bottom], 8)
-            Button("Delete Gift") {
-                print("NEEDS TO BE IMPLEMENTED")
-//                if (gift.isMostWanted && gift !== currUser.giftsList[currFavGiftIndex]) {
-//                    currUser.giftsList[currFavGiftIndex].isMostWanted = false
+            
+//            }"Delete Gift", role: .destructive) {
+//                print("NEEDS TO BE IMPLEMENTED")
+////                if (gift.isMostWanted && gift !== currUser.giftsList[currFavGiftIndex]) {
+////                    currUser.giftsList[currFavGiftIndex].isMostWanted = false
+////                }
+////                showList.toggle() //List and description popup should always be opposites
+////                showDescPopup.toggle()
+//                var currGiftIndex = currUser.giftsList.firstIndex(where: {$0.giftID == gift.giftID})
+//                if let currGiftIndex = currGiftIndex {
+//                    currUser.giftsList.remove(at: currGiftIndex)
 //                }
-//                showList.toggle() //List and description popup should always be opposites
-//                showDescPopup.toggle()
-                
-            }
+//                else {
+//                    print("Couldnt find gift. Found index was : \(currGiftIndex ?? -1), current gift id is : \(gift.giftID)")
+//                }
+               
+//            }
+            
+            
             HStack {
                 Text(gift.name).font(.largeTitle)
                 if (gift.isMostWanted) {
@@ -77,11 +87,9 @@ struct GiftDetailView: View {
                         //Text("Purchasing Link: ")
                         Link(gift.link, destination: url)
                     }
-                }
-                HStack{
-                    //Text("Gift Price: ")
                     Text(gift.price, format: .currency(code: "USD"))
                 }
+                
                 Toggle(isOn: $gift.isMostWanted, label: {
                     Text("Mark As Most Wanted")
                 }).toggleStyle(FavoritedToggleStyle())
@@ -89,7 +97,18 @@ struct GiftDetailView: View {
             VStack{
                 Text(gift.description)
             }//.padding(.bottom)
+            
         }//.frame(maxWidth: .infinity, maxHeight: .infinity)
+        Button(action: {
+            var currGiftIndex = currUser.giftsList.firstIndex(where: {$0.giftID == gift.giftID})
+            if let currGiftIndex = currGiftIndex {
+                currUser.giftsList.remove(at: currGiftIndex)
+            }
+            else {
+                print("Couldnt find gift. Found index was : \(currGiftIndex ?? -1), current gift id is : \(gift.giftID)")
+            }}) {
+                Label("Delete Gift", systemImage: "trash").labelStyle(FlippedLabelStyle(textColor: .red, picColor: .red))
+            }
     }
 }
 

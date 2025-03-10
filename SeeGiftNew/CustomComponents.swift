@@ -148,7 +148,7 @@ struct VerticalLabelStyle: LabelStyle {
 //Still horizontal label but words come before icon
 struct FlippedLabelStyle: LabelStyle {
     @State var textColor: Color = .black
-    @State var picColor: Color = .black
+    @State var picColor: Color = .yellow
     func makeBody(configuration: Configuration) -> some View {
         HStack(alignment: .center, spacing: 8) {
             configuration.title.foregroundStyle(textColor)
