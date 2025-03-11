@@ -417,7 +417,7 @@ var testGiftList: [Gift] = [newGift, newGift2, newGift4]
 
 
 //UserAccounts
-var chris = UserAccount(firstName: "Chris", lastName: "Rogers", userName: "juice", spouse: "Brigette", giftsList: [newGift, newGift4], joinedGroups: [1,2])
+var chris = UserAccount(firstName: "Chris", lastName: "Rogers", userName: "juice", spouse: "Brigette", giftsList: [newGift, newGift, newGift, newGift, newGift, newGift, newGift4], joinedGroups: [1,2])
 var brigette = UserAccount(firstName: "Brigette", lastName: "Rogers", userName: "brig", spouse: "Chris", joinedGroups: [1,2])
 var collin = UserAccount(firstName: "Collin", lastName: "Rogers", userName: "cdrog", spouse: "Megan", joinedGroups: [2])
 var meg = UserAccount(firstName: "Megan", lastName: "Rogers", userName: "megv", spouse: "Collin", joinedGroups: [2])

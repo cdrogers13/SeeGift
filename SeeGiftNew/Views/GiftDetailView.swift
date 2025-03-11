@@ -18,6 +18,7 @@ struct GiftDetailView: View {
     let defaultGiftImage: Image = Image(systemName: "gift.fill")
     var body: some View {
         
+        
         VStack{
             Button("Close") {
                 if (gift.isMostWanted && gift !== currUser.giftsList[currFavGiftIndex]) {

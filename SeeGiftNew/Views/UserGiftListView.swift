@@ -29,6 +29,7 @@ struct UserGiftListView: View {
             if (showList) {
                 NavigationView {
                     ZStack {
+                        VStack {
                         ScrollView (showsIndicators: false) {
                             //                        ForEach(newList) {gift in
                             ForEach(currUser.giftsList) {gift in
@@ -61,9 +62,9 @@ struct UserGiftListView: View {
                             }.listRowBackground(Color.black)
                             //Color.black.ignoresSafeArea(.all)
                             //                        NavigationLink (destination: AddGiftView(createdUser)){
-//                            NavigationLink (destination: AddGiftViaLinkView()){
-//                                Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
-//                            }.padding([.bottom])
+                            //                            NavigationLink (destination: AddGiftViaLinkView()){
+                            //                                Label("Add New Gift", systemImage: "plus.app").font(.headline).imageScale(.large)
+                            //                            }.padding([.bottom])
                             Button(action: {
                                 showAddGiftPopup.toggle()
                             })
@@ -73,6 +74,16 @@ struct UserGiftListView: View {
                         }.padding().blur(radius: showAddGiftPopup ? 15 : 0).onTapGesture {
                             showAddGiftPopup = false
                         }
+                            Button(action: {
+                                
+                            })
+                            {
+                                Image(systemName: "plus").resizable().frame(width: 50, height: 50).symbolVariant(.circle.fill).imageScale(.large)
+//                                Label{ Text("New Gift").font(.headline) }
+//                                icon: {Image(systemName: "plus").symbolVariant(.circle.fill).imageScale(.large)}.labelStyle(VerticalLabelStyle(textColor: .white, picColor: .yellow))
+                            }
+                    }
+                        
                         //Let user select between adding a gift via link or manually when they click add gift
                         if (showAddGiftPopup) {
                             VStack {
