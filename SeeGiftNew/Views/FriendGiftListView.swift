@@ -67,11 +67,11 @@ struct StandardGiftButton : View {
                 
                 ZStack(alignment: .topTrailing) {
                     HStack{
-                        if (gift.image.isEmpty) {
+                        if (gift.baseImage.isEmpty) {
                             defaultGiftImage
                         }
                         else {
-                            Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+                            Image(gift.baseImage).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
                         }
                         Spacer()
                         VStack (alignment: .trailing){
@@ -107,10 +107,10 @@ struct IsGiftedButton : View {
                     Label("GIFTED!", systemImage: "gift.circle.fill").labelStyle(FlippedLabelStyle(textColor: .black, picColor: .green))
                     ZStack(alignment: .topTrailing) {
                         HStack{
-                            if (gift.image.isEmpty) {
+                            if (gift.baseImage.isEmpty) {
                                 defaultGiftImage
                             }
-                            else { Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200).padding([.bottom])
+                            else { Image(gift.baseImage).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200).padding([.bottom])
                             }
                             Spacer()
                             VStack (alignment: .trailing){

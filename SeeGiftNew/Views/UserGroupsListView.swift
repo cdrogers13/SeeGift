@@ -11,7 +11,7 @@ struct UserGroupsListView: View {
     @Environment(UserAccount.self) var currUser
     
     var body: some View {
-        var userGroups = loadUserGroups(user: currUser)
+        let userGroups = loadUserGroups(user: currUser)
         NavigationView {
             ScrollView (showsIndicators: false) {
 //                ForEach(userGroupsArray) {group in

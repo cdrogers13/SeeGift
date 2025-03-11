@@ -41,11 +41,11 @@ struct UserGiftListView: View {
                                 }) {
                                     ZStack(alignment: .topTrailing) {
                                         HStack{
-                                            if (gift.image.isEmpty) {
+                                            if (gift.baseImage.isEmpty) {
                                                 defaultGiftImage
                                             }
                                             else {
-                                                Image(gift.image).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
+                                                Image(gift.baseImage).resizable().cornerRadius(50).scaledToFit().frame(width: 200, height: 200)
                                             }
                                             Spacer()
                                             VStack (alignment: .trailing){
@@ -84,7 +84,7 @@ struct UserGiftListView: View {
                                             Label("Add Gift Via Link", systemImage: "gift").foregroundStyle(.black).imageScale(.large).labelStyle(VerticalLabelStyle(textColor: .yellow, picColor: .yellow))
                                         }
                                     }//.background(.ultraThickMaterial)
-                                    Button(action: { print("HI")})
+                                    NavigationLink (destination: AddGiftView())
                                     {
                                         ZStack {
                                             RoundedRectangle(cornerRadius: 50).fill(.black).frame(width: 150, height: 150)

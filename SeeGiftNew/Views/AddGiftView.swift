@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AddGiftView: View {
+    @Environment(UserAccount.self) var currUser
     @State var name: String = ""
     @State var price: Double = 0
     @State var link: String = ""
@@ -15,10 +16,10 @@ struct AddGiftView: View {
     @State var description: String = ""
     var giftID: Int = Int.random(in: 0...1000000000)
    
-    private var user: UserAccount = UserAccount()
-    init(_ user: UserAccount) {
-        self.user = user
-    }
+//    private var currUser: UserAccount = UserAccount()
+//    init(_ user: UserAccount) {
+//        self.currUser = user
+//    }
     
     var body: some View {
         NavigationView {
@@ -44,7 +45,7 @@ struct AddGiftView: View {
                 HStack{
                     Button("Save And Add New Gift") {
                         //This button will save the gift to the users giftlist (Want to add a nice little popup confirmation here)
-                        userAddGift(user: user, giftName: name, giftPrice: price, giftDescription: description, giftLink: link, giftRanking: ranking)
+                        userAddGift(user: currUser, giftName: name, giftPrice: price, giftDescription: description, giftLink: link, giftRanking: ranking)
 //                        let newGift: Gift = Gift(name: name, price: price, description: description, link: link, ranking: ranking)
 //                        user.giftsList.append(newGift)
                         //This button will essentially start the gift creation process over again. It's very crude right now by just erasing the data but that's kind of the idea
@@ -66,5 +67,5 @@ struct AddGiftView: View {
 }
 
 #Preview {
-    AddGiftView(UserAccount())
+    AddGiftView().environment(chris)
 }

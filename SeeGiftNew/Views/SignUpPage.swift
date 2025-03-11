@@ -56,7 +56,7 @@ struct SignUpPage: View {
                     }
                     
                     }
-                NavigationLink(destination: AddGiftView(createdUser)) {
+                NavigationLink(destination: AddGiftView()) {
                         Text("Create Account")
                     //This image works as a button too, so i can make something cool like this link: https://www.reddit.com/r/SwiftUI/comments/od2uum/is_there_a_preview_bug_where_navigation_links/
                     

@@ -125,8 +125,9 @@ struct LoadedGiftLinkView: View {
                      gift.downloadedImages = images.filter() {
                          $0.isSelected == true
                      }.map({$0.url})
-                     //Download those images here
+                     //TODO: Download those images here
                      
+                     gift.baseImage = gift.downloadedImages[0] //Set the baseImage to the first selected one. TODO: Might change this later so that the baseimage just uses the first index of the array on the view itself but this is fine for now
                      currUser.giftsList.append(gift)
                      print(currUser)
                  }

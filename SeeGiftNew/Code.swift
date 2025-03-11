@@ -6,10 +6,10 @@
 //
 
 
-/*TODO: -IMPLEMENT, SHOW AND DETERMINE A USAGE FOR GIFT RANKINGS ON PERTINENT VIEWS AND INPUT PAGES
+/*TODO:
             --Might want to put in the capability for user to rearrange their ranking order through drag and drop. Would be good practice at the very least
  
- -IMPLEMENT FUNCTIONAL LINKS ON THE GIFTS  (DONE! OPENS IN BROWSER, NEED TO TEST IF THESE LINKS ALLOW THEM TO OPEN IN APPS. I IMAGINE IT USES USER DEFAULT PREFERENCES)
+ -(DONE! OPENS IN BROWSER, NEED TO TEST IF THESE LINKS ALLOW THEM TO OPEN IN APPS. I IMAGINE IT USES USER DEFAULT PREFERENCES) IMPLEMENT FUNCTIONAL LINKS ON THE GIFTS
  
  -LEARN ABOUT AND BEGIN WORK ON THE SETTINGS FEATURES AND THE COGS ICON ON THE GROUP SETTINGS SCREEN
  
@@ -19,7 +19,7 @@
  
  -NEED TO FIGURE OUT HOW TO FIX THE ISSUE OF MULTI-LEVEL NAVIGATIONLINKS PUTTING MORE THAN ONE BACK BUTTON ON SCREEN. MY GUESS IS TO USE THE STACK INSTEAD OF THE LINKS
  
- -THINK I WANT TO CHANGE RANKINGS TO ONE MOST WANTED GIFT PER LIST INSTEAD OF A RANKING SYSTEM. PROBABLY EASIER ON ALL FRONTS TO BE HONEST (DONE!)
+ -(DONE!) THINK I WANT TO CHANGE RANKINGS TO ONE MOST WANTED GIFT PER LIST INSTEAD OF A RANKING SYSTEM. PROBABLY EASIER ON ALL FRONTS TO BE HONEST
  
  -USE NEW PICTURE DOWNLOAD TO CREATE A CHECKLIST VIEW WHERE USERS CAN SELECT WHAT PICS THEY WANT TO USE FROM THE WEB LINK
  
@@ -106,7 +106,7 @@ class AdminAccount: UserAccount {
     var price: Double = 0
     var description: String = ""
     //var userComments: String = ""
-    var image: String = ""
+    var baseImage: String = ""
     var link: String = ""
     //var ranking: Int = 0
     var isGifted: Bool = false
@@ -118,7 +118,7 @@ class AdminAccount: UserAccount {
         self.name = name
         self.price = price
         self.description = description
-        self.image = image
+        self.baseImage = image
         self.link = link
         self.isGifted = isGifted
         self.giftID = giftID
